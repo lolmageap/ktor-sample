@@ -1,6 +1,6 @@
 package chanwoo.cherhy.plugins
 
-import chanwoo.cherhy.plugins.CustomerRouter.Companion.customerRouting
+import chanwoo.cherhy.plugins.customer.CustomerRouter.Companion.customerRouting
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
