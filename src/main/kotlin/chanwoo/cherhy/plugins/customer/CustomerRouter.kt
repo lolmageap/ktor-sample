@@ -7,32 +7,30 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-class CustomerRouter {
+object CustomerRouter {
 
-    companion object{
-        fun Route.customerRouting() {
-            route("/customer") {
-                get {
-                    call.respondText("No customers found", status = HttpStatusCode.OK)
-                }
+    fun Route.customerRouting() {
+        route("/customer") {
+            get {
+                call.respondText("No customers found", status = HttpStatusCode.OK)
+            }
 
-                get("{id?}") {
-                    val customerId : String? = call.parameters["id"]
-                    val customer : CustomerRequest = CustomerService.getCustomerById(customerId)
+            get("{id?}") {
+                val customerId : String? = call.parameters["id"]
+                val customer : CustomerRequest = CustomerService.getCustomerById(customerId)
 
-                    call.respond(customer)
-                    call.respondText("Customer not found", status = HttpStatusCode.NotFound)
-                }
+                call.respond(customer)
+                call.respondText("Customer not found", status = HttpStatusCode.NotFound)
+            }
 
-                post {
-
-                }
-
-                delete("{id?}") {
-
-                }
+            post {
 
             }
+
+            delete("{id?}") {
+
+            }
+
         }
     }
 
