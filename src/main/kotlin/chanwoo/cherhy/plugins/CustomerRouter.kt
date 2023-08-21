@@ -18,7 +18,7 @@ class CustomerRouter {
                     val customerId = call.parameters["id"]
 
                     if (customerId != null) {
-                        val customer = fetchCustomerById(customerId)
+                        val customer = getCustomerById(customerId)
                         if (customer != null) {
                             call.respond(customer)
                         } else {
@@ -38,7 +38,7 @@ class CustomerRouter {
             }
         }
 
-        fun fetchCustomerById(id: String): Customer? {
+        private fun getCustomerById(id: String): CustomerRequest? {
             return null
         }
 
@@ -46,4 +46,4 @@ class CustomerRouter {
 
 }
 
-data class Customer(val id: String, val name: String, val email: String)
+data class CustomerRequest(val id: String, val name: String, val email: String)
