@@ -1,24 +1,25 @@
 package chanwoo.cherhy.plugins.customer.entity
 
-//import chanwoo.cherhy.plugins.util.BaseEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import chanwoo.cherhy.plugins.util.BaseEntity
+import chanwoo.cherhy.plugins.util.BaseLongIdTable
+import org.jetbrains.exposed.dao.LongEntityClass
+import org.jetbrains.exposed.dao.id.EntityID
 
+object Customers: BaseLongIdTable("customer", "id") {
+    val name = varchar("name", 50)
+    val email = varchar("email", 50)
+    val password = varchar("password", 50)
+    val phoneNumber = varchar("phone_number", 50).nullable()
+}
 
-@Entity
-data class Customer (
+class Customer(id: EntityID<Long>): BaseEntity(
+    id = id,
+    table = Customers,
+) {
+    var name: String by Customers.name
+    var email: String by Customers.email
+    var password : String by Customers.password
+    var phoneNumber: String? by Customers.phoneNumber
 
-    @Id @GeneratedValue
-    val id: Long?,
-
-    var name: String,
-
-    val email: String,
-
-    var password : String,
-
-    var phoneNumber: String?,
-
-)
-//    : BaseEntity()
+    companion object: LongEntityClass<Customer>(Customers)
+}
