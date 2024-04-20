@@ -1,43 +1,36 @@
 package chanwoo.cherhy.plugins.customer
 
-import chanwoo.cherhy.plugins.customer.request.CustomerRequest
+import chanwoo.cherhy.plugins.config.EndPoint.CUSTOMER.CREATE_CUSTOMER
+import chanwoo.cherhy.plugins.config.EndPoint.CUSTOMER.GET_CUSTOMER
+import chanwoo.cherhy.plugins.config.EndPoint.CUSTOMER.GET_CUSTOMERS
 import chanwoo.cherhy.plugins.customer.service.CustomerService
-import io.ktor.http.*
+import chanwoo.cherhy.plugins.util.PageRequest
+import chanwoo.cherhy.plugins.util.id
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.lang.RuntimeException
+import org.koin.ktor.ext.inject
 
-object CustomerRouter {
+fun Route.customer() {
+    val customerService: CustomerService by inject()
 
-    fun Route.customerRouting() {
-
-        route("/customer") {
-            get {
-                call.respondText("No customers found", status = HttpStatusCode.OK)
-            }
-
-            get("{id?}") {
-                val customerId: Long = call.parameters["id"]?.toLongOrNull()
-                    ?: return@get call.respond(HttpStatusCode.BadRequest, "Invalid data passed")
-
-                val customer : CustomerRequest = CustomerService.getCustomerById(customerId)
-
-                call.respond(customer)
-//                call.respondText("Customer not found", status = HttpStatusCode.NotFound)
-            }
-
-            post {
-
-            }
-
-            delete("{id?}") {
-
-            }
-
-        }
+    get(GET_CUSTOMERS) {
+        val requestCondition = call.receive<PageRequest>()
+        customerService.getAll(requestCondition)
     }
 
+    get(GET_CUSTOMER) {
+        val customerId = call.id
+        val customer = customerService.get(customerId)
+        call.respond(customer)
+    }
+
+    post(CREATE_CUSTOMER) {
+
+    }
+
+    delete(GET_CUSTOMER) {
+
+    }
 }
-
-
