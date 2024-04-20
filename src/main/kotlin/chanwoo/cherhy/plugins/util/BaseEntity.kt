@@ -1,20 +1,35 @@
 package chanwoo.cherhy.plugins.util
 
-import jakarta.persistence.Column
-import jakarta.persistence.EntityListeners
-import jakarta.persistence.MappedSuperclass
+import org.jetbrains.exposed.dao.*
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
-//@MappedSuperclass
-//@EntityListeners(AuditingEntityListener)
-//abstract class BaseEntity {
-//
-//    @CreatedDate
-//    @Column(nullable = false, updatable = false)
-//    protected var createdAt: LocalDateTime = LocalDateTime.MIN
-//
-//    @LastModifiedDate
-//    @Column(nullable = false)
-//    protected var modifiedAt: LocalDateTime = LocalDateTime.MIN
-//
-//}
+abstract class BaseLongIdTable(
+    name: String,
+    idName: String = "id",
+) : LongIdTable(name, idName) {
+    val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
+    val updatedAt = datetime("updated_at").clientDefault { LocalDateTime.now() }
+}
+
+abstract class BaseEntity(
+    id: EntityID<Long>,
+    table: BaseLongIdTable,
+) : LongEntity(id) {
+    val createdAt by table.createdAt
+    var updatedAt by table.updatedAt
+}
+
+abstract class BaseEntityClass<E : BaseEntity>(
+    table: BaseLongIdTable,
+) : LongEntityClass<E>(table) {
+    init {
+        EntityHook.subscribe { action ->
+            if (action.changeType == EntityChangeType.Updated) {
+                action.toEntity(this)?.updatedAt = LocalDateTime.now()
+            }
+        }
+    }
+}
