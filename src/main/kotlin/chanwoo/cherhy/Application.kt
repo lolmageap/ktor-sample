@@ -1,8 +1,7 @@
 package chanwoo.cherhy
 
-import chanwoo.cherhy.plugins.configureHTTP
-import chanwoo.cherhy.plugins.configureRouting
-import chanwoo.cherhy.plugins.configureSecurity
+import chanwoo.cherhy.plugins.config.configureHTTP
+import chanwoo.cherhy.plugins.config.configureRouting
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -15,12 +14,10 @@ fun main() {
 }
 
 fun Application.module() {
-    configureSecurity()
     configureHTTP()
     configureRouting()
 
     install(ContentNegotiation) {
         jackson()
     }
-
 }
