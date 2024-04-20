@@ -1,6 +1,6 @@
 package chanwoo.cherhy
 
-import chanwoo.cherhy.plugins.configureRouting
+import chanwoo.cherhy.plugins.config.configureRouting
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
