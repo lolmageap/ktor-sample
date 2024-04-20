@@ -1,29 +1,23 @@
 package chanwoo.cherhy.plugins.customer.service
 
-import chanwoo.cherhy.plugins.customer.entity.Customer
+import chanwoo.cherhy.plugins.customer.repository.CustomerRepository
 import chanwoo.cherhy.plugins.customer.request.CustomerRequest
-import chanwoo.cherhy.plugins.customer.response.CustomerResponse
-import com.linecorp.kotlinjdsl.QueryFactory
-import com.linecorp.kotlinjdsl.listQuery
-import com.linecorp.kotlinjdsl.querydsl.expression.column
-import com.linecorp.kotlinjdsl.singleQuery
+import chanwoo.cherhy.plugins.extension.encode
+import chanwoo.cherhy.plugins.util.PageRequest
+import java.util.Base64.Encoder
 
-object CustomerService {
+class CustomerService(
+    private val customerRepository: CustomerRepository,
+    private val passwordEncoder: Encoder,
+) {
+    fun save(request: CustomerRequest) =
+        passwordEncoder.encode(request.password).let {
+            customerRepository.save(request, it)
+        }
 
-    lateinit var queryFactory : QueryFactory
+    fun getAll(request: PageRequest) =
+        customerRepository.getAll(request)
 
-    fun getCustomerById(id: Long): CustomerResponse {
-
-        val customer : Customer = queryFactory.singleQuery {
-            select(entity(Customer::class))
-            from(entity(Customer::class))
-            where(
-                column(Customer::id).equal(id),
-            )
-        } ?: throw Exception("에러")
-
-        return CustomerResponse.of(customer)
-//        return CustomerRequest(id = id, name = "kim", email = "chan@woo.com")
-    }
-
+    fun get(id: Long) =
+        customerRepository.get(id)
 }
