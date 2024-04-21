@@ -11,7 +11,7 @@ interface CustomerRepository {
     fun get(id: Long): CustomerResponse
 }
 
-object CustomerRepositoryImpl: CustomerRepository {
+class CustomerRepositoryImpl: CustomerRepository {
     override fun save(
         request: CustomerRequest,
         encodedPassword: String,
