@@ -1,4 +1,4 @@
-package chanwoo.cherhy.plugins.config
+package chanwoo.cherhy.plugins.util
 
 object EndPoint {
     const val HOME = "/"

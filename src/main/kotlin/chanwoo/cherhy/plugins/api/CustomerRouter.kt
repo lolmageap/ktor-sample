@@ -1,9 +1,9 @@
-package chanwoo.cherhy.plugins.customer
+package chanwoo.cherhy.plugins.api
 
-import chanwoo.cherhy.plugins.config.EndPoint.CUSTOMER.CREATE_CUSTOMER
-import chanwoo.cherhy.plugins.config.EndPoint.CUSTOMER.GET_CUSTOMER
-import chanwoo.cherhy.plugins.config.EndPoint.CUSTOMER.GET_CUSTOMERS
-import chanwoo.cherhy.plugins.customer.service.CustomerService
+import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.CREATE_CUSTOMER
+import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.GET_CUSTOMER
+import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.GET_CUSTOMERS
+import chanwoo.cherhy.plugins.domain.customer.CustomerService
 import chanwoo.cherhy.plugins.util.PageRequest
 import chanwoo.cherhy.plugins.util.id
 import io.ktor.server.application.*

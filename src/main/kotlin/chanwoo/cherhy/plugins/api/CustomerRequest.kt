@@ -1,4 +1,4 @@
-package chanwoo.cherhy.plugins.customer.request
+package chanwoo.cherhy.plugins.api
 
 data class CustomerRequest(
     val id: Long,

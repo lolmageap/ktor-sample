@@ -1,6 +1,6 @@
-package chanwoo.cherhy.plugins.customer.response
+package chanwoo.cherhy.plugins.api
 
-import chanwoo.cherhy.plugins.customer.entity.Customer
+import chanwoo.cherhy.plugins.domain.customer.Customer
 
 data class CustomerResponse(
     val id: Long,

@@ -1,6 +1,7 @@
-package chanwoo.cherhy.plugins.customer.entity
+package chanwoo.cherhy.plugins.domain.customer
 
 import chanwoo.cherhy.plugins.util.BaseEntity
+import chanwoo.cherhy.plugins.util.BaseEntityClass
 import chanwoo.cherhy.plugins.util.BaseLongIdTable
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -21,5 +22,5 @@ class Customer(id: EntityID<Long>): BaseEntity(
     var password : String by Customers.password
     var phoneNumber: String? by Customers.phoneNumber
 
-    companion object: LongEntityClass<Customer>(Customers)
+    companion object: BaseEntityClass<Customer>(Customers)
 }

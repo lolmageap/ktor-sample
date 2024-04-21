@@ -1,9 +1,7 @@
-package chanwoo.cherhy.plugins.customer.repository
+package chanwoo.cherhy.plugins.domain.customer
 
-import chanwoo.cherhy.plugins.customer.entity.Customer
-import chanwoo.cherhy.plugins.customer.entity.Customers
-import chanwoo.cherhy.plugins.customer.request.CustomerRequest
-import chanwoo.cherhy.plugins.customer.response.CustomerResponse
+import chanwoo.cherhy.plugins.api.CustomerRequest
+import chanwoo.cherhy.plugins.api.CustomerResponse
 import chanwoo.cherhy.plugins.util.PageRequest
 import org.jetbrains.exposed.sql.selectAll
 

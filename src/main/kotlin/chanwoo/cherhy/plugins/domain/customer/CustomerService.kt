@@ -1,7 +1,6 @@
-package chanwoo.cherhy.plugins.customer.service
+package chanwoo.cherhy.plugins.domain.customer
 
-import chanwoo.cherhy.plugins.customer.repository.CustomerRepository
-import chanwoo.cherhy.plugins.customer.request.CustomerRequest
+import chanwoo.cherhy.plugins.api.CustomerRequest
 import chanwoo.cherhy.plugins.extension.encode
 import chanwoo.cherhy.plugins.util.PageRequest
 import java.util.Base64.Encoder
