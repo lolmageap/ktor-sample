@@ -44,6 +44,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.1.0")
     implementation("io.ktor:ktor-server-websockets")
 
+    implementation("org.slf4j:slf4j-simple:2.0.13")
     implementation("io.insert-koin:koin-ktor:3.5.6")
 
     testImplementation("io.ktor:ktor-server-tests-jvm")
