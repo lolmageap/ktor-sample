@@ -1,13 +1,17 @@
 package chanwoo.cherhy.plugins.config
 
+import chanwoo.cherhy.plugins.api.chat
+import chanwoo.cherhy.plugins.api.customer
 import io.ktor.server.application.*
+import io.ktor.server.plugins.swagger.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondText("찬우씨 하이")
-        }
+        get("/") { call.respondText("health check") }
+        swaggerUI("김찬우")
+        customer()
+        chat()
     }
 }
