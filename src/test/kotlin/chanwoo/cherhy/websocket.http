@@ -1,3 +1,7 @@
 ###
 WEBSOCKET ws://0.0.0.0:8080/echo
 Content-Type: text/plain
+
+###
+GET localhost:8080/customers/1
+Content-Type: application/json
