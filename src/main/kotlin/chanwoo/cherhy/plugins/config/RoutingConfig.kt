@@ -10,7 +10,7 @@ import io.ktor.server.routing.*
 fun Application.configureRouting() {
     routing {
         get("/") { call.respondText("health check") }
-        swaggerUI("김찬우")
+        swaggerUI("/swagger")
         customer()
         chat()
     }
