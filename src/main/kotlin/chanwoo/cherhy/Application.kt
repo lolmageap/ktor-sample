@@ -1,13 +1,12 @@
 package chanwoo.cherhy
 
+import chanwoo.cherhy.plugins.config.configureDependencyInjection
+import chanwoo.cherhy.plugins.config.configureJackson
 import chanwoo.cherhy.plugins.config.configureRouting
-import io.ktor.serialization.jackson.*
+import chanwoo.cherhy.plugins.config.configureWebSocket
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.websocket.*
-import java.time.Duration
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
@@ -15,16 +14,8 @@ fun main() {
 }
 
 fun Application.module() {
-    install(WebSockets) {
-        pingPeriod = Duration.ofSeconds(15)
-        timeout = Duration.ofSeconds(15)
-        maxFrameSize = Long.MAX_VALUE
-        masking = false
-    }
-
-    install(ContentNegotiation) {
-        jackson()
-    }
-
+    configureWebSocket()
+    configureJackson()
+    configureDependencyInjection()
     configureRouting()
 }
