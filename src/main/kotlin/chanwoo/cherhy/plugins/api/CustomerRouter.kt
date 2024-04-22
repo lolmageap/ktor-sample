@@ -4,6 +4,8 @@ import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.CREATE_CUSTOMER
 import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.GET_CUSTOMER
 import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.GET_CUSTOMERS
 import chanwoo.cherhy.plugins.domain.customer.CustomerService
+import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.DELETE_CUSTOMER
+import chanwoo.cherhy.plugins.util.EndPoint.CUSTOMER.UPDATE_CUSTOMER
 import chanwoo.cherhy.plugins.util.PageRequest
 import chanwoo.cherhy.plugins.util.id
 import io.ktor.server.application.*
@@ -14,7 +16,7 @@ import org.koin.ktor.ext.inject
 
 fun Route.customer() {
     val customerService: CustomerService by inject()
-
+    
     get(GET_CUSTOMERS) {
         val requestCondition = call.receive<PageRequest>()
         customerService.getAll(requestCondition)
@@ -27,10 +29,21 @@ fun Route.customer() {
     }
 
     post(CREATE_CUSTOMER) {
-
+        val request = call.receive<CustomerRequest>()
+        val customer = customerService.save(request)
+        call.respond(customer)
     }
 
-    delete(GET_CUSTOMER) {
+    put(UPDATE_CUSTOMER) {
+        val customerId = call.id
+        val request = call.receive<CustomerRequest>()
+        customerService.update(customerId, request)
+        call.respond("Customer updated")
+    }
 
+    delete(DELETE_CUSTOMER) {
+        val customerId = call.id
+        customerService.delete(customerId)
+        call.respond("Customer deleted")
     }
 }
