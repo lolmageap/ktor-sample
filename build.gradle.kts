@@ -33,6 +33,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     implementation("io.ktor:ktor-server-status-pages")
 
+    implementation("io.ktor:ktor-server-auth-jvm")
+    implementation("io.ktor:ktor-server-auth-jwt-jvm")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
 
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
