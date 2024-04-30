@@ -16,4 +16,5 @@ fun Application.module() {
     configureDependencyInjection()
     configureRouting()
     configureDatabase()
+    configureJwt()
 }
