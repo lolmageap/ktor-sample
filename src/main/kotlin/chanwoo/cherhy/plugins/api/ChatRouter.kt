@@ -5,14 +5,14 @@ import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import mu.KotlinLogging
-import java.util.Collections
+import java.util.*
 
 private val connectionFactory = Collections.synchronizedSet(HashSet<Connection>())
 private val logger = KotlinLogging.logger { }
 
 fun Route.chat() {
     webSocket("/echo") {
-        connectionFactory + Connection(this)
+        connectionFactory += Connection(this)
         send("Please enter your name")
 
         try {
@@ -25,7 +25,7 @@ fun Route.chat() {
         } catch (e: Exception) {
             logger.error { e.localizedMessage }
         } finally {
-            connectionFactory - Connection(this)
+            connectionFactory -= Connection(this)
         }
     }
 }
