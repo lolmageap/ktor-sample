@@ -11,5 +11,6 @@ object EndPoint {
         const val GET_CUSTOMER = "$CUSTOMER/{id}"
         const val UPDATE_CUSTOMER = "$CUSTOMER/{id}"
         const val DELETE_CUSTOMER = "$CUSTOMER/{id}"
+        const val LOGIN = "$CUSTOMER/login"
     }
 }
