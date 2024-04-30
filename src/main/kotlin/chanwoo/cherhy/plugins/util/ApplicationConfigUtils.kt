@@ -8,4 +8,5 @@ object ApplicationConfigUtils {
         HoconApplicationConfig(ConfigFactory.load()).property(path).getString()
 
     fun getDataSource(key: String) = getConfigProperty("database.datasource.$key")
+    fun getJwt(key: String) = getConfigProperty("jwt.$key")
 }
