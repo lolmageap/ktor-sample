@@ -3,6 +3,7 @@ package chanwoo.cherhy.ktor.api
 import chanwoo.cherhy.ktor.domain.chat.Connection
 import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
 import chanwoo.cherhy.ktor.util.SecurityProperty.AUTHORITY
+import chanwoo.cherhy.ktor.util.jwt
 import chanwoo.cherhy.ktor.util.username
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
@@ -17,7 +18,7 @@ private val logger = KotlinLogging.logger { }
 fun Route.chat() {
     authenticate(AUTHORITY) {
         webSocket(ECHO) {
-            val username = call.username
+            val username = call.jwt.username
 
             connectionFactory += Connection(this)
             send("Please enter your name")
