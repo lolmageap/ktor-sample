@@ -26,7 +26,7 @@ fun Route.customer() {
         get(LOGIN) {
             val request = call.receive<LoginRequest>()
             // TODO: insert validation logic
-            val jwt = jwtManager.createToken(request.username)
+            val jwt = jwtManager.createToken(0, request.username)
             call.respond(jwt)
         }
     }
