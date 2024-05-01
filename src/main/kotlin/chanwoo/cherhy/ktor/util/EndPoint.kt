@@ -6,11 +6,10 @@ object EndPoint {
     object CUSTOMER {
         private const val CUSTOMER = "/customers"
 
-        const val CREATE_CUSTOMER = CUSTOMER
-        const val GET_CUSTOMERS = CUSTOMER
-        const val GET_CUSTOMER = "$CUSTOMER/{id}"
-        const val UPDATE_CUSTOMER = "$CUSTOMER/{id}"
-        const val DELETE_CUSTOMER = "$CUSTOMER/{id}"
+        const val SIGN_UP = "$CUSTOMER/signup"
+        const val GET_ME = "$CUSTOMER/me"
+        const val UPDATE_CUSTOMER = CUSTOMER
+        const val DELETE_CUSTOMER = CUSTOMER
         const val LOGIN = "$CUSTOMER/login"
     }
 
