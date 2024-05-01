@@ -11,6 +11,7 @@ interface CustomerRepository {
     fun findById(id: Long): CustomerResponse
     fun update(id: Long, request: CustomerRequest)
     fun delete(id: Long)
+    fun findByUsername(username: String): CustomerResponse
 }
 
 class CustomerRepositoryImpl: CustomerRepository {
@@ -48,4 +49,10 @@ class CustomerRepositoryImpl: CustomerRepository {
     override fun delete(id: Long) {
         Customer.findById(id)?.delete()
     }
+
+    override fun findByUsername(username: String) =
+        Customer.find { Customers.email eq username }
+            .firstOrNull()
+            ?.let(CustomerResponse::of)
+            ?: throw IllegalArgumentException("Customer not found")
 }
