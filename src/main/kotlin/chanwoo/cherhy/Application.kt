@@ -1,6 +1,6 @@
 package chanwoo.cherhy
 
-import chanwoo.cherhy.plugins.config.*
+import chanwoo.cherhy.ktor.config.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
