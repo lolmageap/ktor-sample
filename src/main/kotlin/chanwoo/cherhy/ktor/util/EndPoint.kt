@@ -18,4 +18,10 @@ object EndPoint {
 
         const val ECHO = CHAT
     }
+
+    object CHAT_ROOM {
+        private const val CHAT_ROOM = "/chat-room"
+
+        const val CREATE_CHAT_ROOM = CHAT_ROOM
+    }
 }
