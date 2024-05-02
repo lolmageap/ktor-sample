@@ -11,6 +11,7 @@ import chanwoo.cherhy.ktor.util.EndPoint.CUSTOMER.UPDATE_CUSTOMER
 import chanwoo.cherhy.ktor.util.SecurityProperty.AUTHORITY
 import chanwoo.cherhy.ktor.util.jwt
 import chanwoo.cherhy.ktor.util.userId
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
@@ -27,6 +28,7 @@ fun Route.customer() {
         val request = call.receive<LoginRequest>()
         val jwt = loginUseCase.execute(request)
         call.respond(jwt)
+        call.respond(HttpStatusCode.OK)
     }
 
     post(SIGN_UP) {
@@ -34,6 +36,7 @@ fun Route.customer() {
         signupUseCase.execute(request)
         val jwt = loginUseCase.execute(request)
         call.respond(jwt)
+        call.respond(HttpStatusCode.Created)
     }
 
     authenticate(AUTHORITY) {
@@ -41,6 +44,7 @@ fun Route.customer() {
             val customerId = call.jwt.userId
             val customer = customerService.get(customerId)
             call.respond(customer)
+            call.respond(HttpStatusCode.OK)
         }
     }
 
@@ -49,7 +53,7 @@ fun Route.customer() {
             val customerId = call.jwt.userId
             val request = call.receive<CustomerRequest>()
             customerService.update(customerId, request)
-            call.respond("Customer updated")
+            call.respond(HttpStatusCode.Created)
         }
     }
 
@@ -57,7 +61,7 @@ fun Route.customer() {
         delete(DELETE_CUSTOMER) {
             val customerId = call.jwt.userId
             customerService.delete(customerId)
-            call.respond("Customer deleted")
+            call.respond(HttpStatusCode.NoContent)
         }
     }
 }
