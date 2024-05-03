@@ -12,6 +12,7 @@ interface CustomerRepository {
     fun update(id: Long, request: CustomerRequest)
     fun delete(id: Long)
     fun findByUsername(username: String): CustomerResponse
+    fun findAllByIdIn(ids: List<Long>): List<CustomerResponse>
 }
 
 class CustomerRepositoryImpl: CustomerRepository {
@@ -55,4 +56,9 @@ class CustomerRepositoryImpl: CustomerRepository {
             .firstOrNull()
             ?.let(CustomerResponse::of)
             ?: throw IllegalArgumentException("Customer not found")
+
+    override fun findAllByIdIn(ids: List<Long>): List<CustomerResponse> {
+        return Customer.find { Customers.id inList ids }
+            .map(CustomerResponse::of)
+    }
 }
