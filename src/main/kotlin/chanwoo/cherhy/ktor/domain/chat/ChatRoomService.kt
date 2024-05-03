@@ -10,6 +10,7 @@ class ChatRoomService(
         encodedPassword: String?,
         description: String,
         maxUsers: Int,
+        currentUsers: Int,
         ownerId: EntityID<Long>,
     ) {
         chatRoomRepository.create(
@@ -17,6 +18,7 @@ class ChatRoomService(
             encodedPassword = encodedPassword,
             description = description,
             maxUsers = maxUsers,
+            currentUsers = currentUsers,
             ownerId = ownerId,
         )
     }

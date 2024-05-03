@@ -17,14 +17,16 @@ class CreateChatRoomUseCase(
     ) {
         val encodedPassword = request.password?.let { passwordEncoder.encode(it) }
 
-        val targetCustomer = customerService.get(request.targetCustomerId)
         val owner = customerService.get(ownerId)
+        val targetCustomer = customerService.getAll(request.targetCustomerIds)
+        val countToCurrenUsers = targetCustomer.size + 1
 
         chatRoomService.create(
             roomName = request.name,
             encodedPassword = encodedPassword,
             description = request.description,
             maxUsers = request.maxUser,
+            currentUsers = countToCurrenUsers,
             ownerId = owner.id,
         )
 

@@ -8,6 +8,7 @@ interface ChatRoomRepository {
         encodedPassword: String?,
         description: String,
         maxUsers: Int,
+        currentUsers: Int,
         ownerId: EntityID<Long>,
     )
 }
@@ -18,13 +19,14 @@ class ChatRoomRepositoryImpl: ChatRoomRepository {
         encodedPassword: String?,
         description: String,
         maxUsers: Int,
+        currentUsers: Int,
         ownerId: EntityID<Long>,
     ) {
         ChatRoom.new {
             name = roomName
             password = encodedPassword
             maxUser = maxUsers
-            currentUser = 2
+            currentUser = currentUsers
             totalChats = 0
             owner = ownerId
         }
