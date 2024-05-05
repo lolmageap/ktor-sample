@@ -1,6 +1,7 @@
 package chanwoo.cherhy.ktor.domain.chat
 
-import org.jetbrains.exposed.dao.id.EntityID
+import chanwoo.cherhy.ktor.util.CustomerId
+import chanwoo.cherhy.ktor.util.ChatRoomId
 
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,
@@ -11,9 +12,9 @@ class ChatRoomService(
         description: String,
         maxUsers: Int,
         currentUsers: Int,
-        ownerId: EntityID<Long>,
-    ) {
-        chatRoomRepository.create(
+        ownerId: CustomerId,
+    ) =
+        chatRoomRepository.save(
             roomName = roomName,
             encodedPassword = encodedPassword,
             description = description,
@@ -21,5 +22,7 @@ class ChatRoomService(
             currentUsers = currentUsers,
             ownerId = ownerId,
         )
-    }
+
+    fun get(chatRoomId: ChatRoomId) =
+        chatRoomRepository.findById(chatRoomId)
 }
