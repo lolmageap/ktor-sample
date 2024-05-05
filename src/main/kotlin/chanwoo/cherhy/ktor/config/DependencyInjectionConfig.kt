@@ -13,16 +13,19 @@ import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 
 val dependencyInjectionModule = module {
-    single { CreateChatRoomUseCase(get(), get(), get()) }
+    single { CreateChatRoomUseCase(get(), get(), get(), get()) }
     single { LoginUseCase(get(), get(), get()) }
     single { SignupUseCase(get(), get()) }
 
     single<CustomerRepository> { CustomerRepositoryImpl() }
     single<ChatRepository> { ChatRepositoryImpl() }
     single<ChatRoomRepository> { ChatRoomRepositoryImpl() }
+    single<ChatRoomLinkRepository> { ChatRoomLinkRepositoryImpl() }
 
     single { CustomerService(get()) }
     single { ChatRoomService(get()) }
+    single { ChatRoomLinkService(get()) }
+    single { ChatService(get()) }
 
     single { JwtManager() }
 }

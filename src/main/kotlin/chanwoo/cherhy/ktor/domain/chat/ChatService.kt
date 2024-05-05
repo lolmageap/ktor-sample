@@ -1,4 +1,7 @@
 package chanwoo.cherhy.ktor.domain.chat
 
-class ChatService {
+class ChatService(
+    private val chatRepository: ChatRepository,
+) {
+
 }
