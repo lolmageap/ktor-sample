@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 abstract class BaseLongIdTable(
     name: String,
     idName: String = "id",
-) : LongIdTable(name, idName) {
+): LongIdTable(name, idName) {
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val updatedAt = datetime("updated_at").clientDefault { LocalDateTime.now() }
 }
@@ -17,14 +17,14 @@ abstract class BaseLongIdTable(
 abstract class BaseEntity(
     id: EntityID<Long>,
     table: BaseLongIdTable,
-) : LongEntity(id) {
+): LongEntity(id) {
     val createdAt by table.createdAt
     var updatedAt by table.updatedAt
 }
 
 abstract class BaseEntityClass<E : BaseEntity>(
     table: BaseLongIdTable,
-) : LongEntityClass<E>(table) {
+): LongEntityClass<E>(table) {
     init {
         EntityHook.subscribe { action ->
             if (action.changeType == EntityChangeType.Updated) {
