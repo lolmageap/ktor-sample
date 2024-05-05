@@ -17,8 +17,9 @@ val ApplicationCall.jwt: JWTPrincipal
     get() = this.principal<JWTPrincipal>()
         ?: throw AccessDeniedException("Invalid token")
 
-val ApplicationCall.room: String
+val ApplicationCall.chatRoomId: ChatRoomId
     get() = this.parameters["room-id"]
+        ?.toLong()
         ?: throw IllegalArgumentException("room-id is required.")
 
 inline fun <reified T : Any> ApplicationCall.getQueryParams(): T {
