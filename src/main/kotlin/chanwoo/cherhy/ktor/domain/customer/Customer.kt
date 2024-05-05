@@ -3,6 +3,7 @@ package chanwoo.cherhy.ktor.domain.customer
 import chanwoo.cherhy.ktor.util.BaseEntity
 import chanwoo.cherhy.ktor.util.BaseEntityClass
 import chanwoo.cherhy.ktor.util.BaseLongIdTable
+import chanwoo.cherhy.ktor.util.CustomerId
 import org.jetbrains.exposed.dao.id.EntityID
 
 object Customers: BaseLongIdTable("customer", "id") {
@@ -12,7 +13,7 @@ object Customers: BaseLongIdTable("customer", "id") {
     val phoneNumber = varchar("phone_number", 50).nullable()
 }
 
-class Customer(id: EntityID<Long>): BaseEntity(
+class Customer(id: EntityID<CustomerId>): BaseEntity(
     id = id,
     table = Customers,
 ) {

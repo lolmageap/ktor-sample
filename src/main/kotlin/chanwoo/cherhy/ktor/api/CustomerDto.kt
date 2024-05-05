@@ -1,7 +1,7 @@
 package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.customer.Customer
-import org.jetbrains.exposed.dao.id.EntityID
+import chanwoo.cherhy.ktor.util.CustomerId
 
 data class LoginRequest(
     val email: String,
@@ -9,7 +9,6 @@ data class LoginRequest(
 )
 
 data class CustomerRequest(
-    val id: Long,
     val name: String,
     val email: String,
     val password: String,
@@ -17,7 +16,7 @@ data class CustomerRequest(
 )
 
 data class CustomerResponse(
-    val id: EntityID<Long>,
+    val id: CustomerId,
     val name: String,
     val email: String,
     val password: String,
@@ -27,7 +26,7 @@ data class CustomerResponse(
         fun of(customer : Customer) =
             with(customer) {
                 CustomerResponse(
-                    id = id,
+                    id = id.value,
                     name = name,
                     email = email,
                     password = password,

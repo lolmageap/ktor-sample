@@ -1,10 +1,9 @@
 package chanwoo.cherhy.ktor.domain.chat
 
 import chanwoo.cherhy.ktor.domain.customer.Customers
-import chanwoo.cherhy.ktor.util.BaseEntity
-import chanwoo.cherhy.ktor.util.BaseEntityClass
-import chanwoo.cherhy.ktor.util.BaseLongIdTable
+import chanwoo.cherhy.ktor.util.*
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.Column
 
 object ChatRooms : BaseLongIdTable("chat_room", "chat_room_id") {
     val name = varchar("name", 255)
@@ -12,10 +11,10 @@ object ChatRooms : BaseLongIdTable("chat_room", "chat_room_id") {
     val maxUser = integer("max_user").default(0)
     val currentUser = integer("current_user").default(0)
     val totalChats = integer("total_chats").default(0)
-    val owner = reference("customer_id", Customers).nullable()
+    val owner: Column<EntityID<CustomerId>> = reference("customer_id", Customers)
 }
 
-class ChatRoom(id: EntityID<Long>) : BaseEntity(id, ChatRooms) {
+class ChatRoom(id: EntityID<ChatRoomId>) : BaseEntity(id, ChatRooms) {
     companion object : BaseEntityClass<ChatRoom>(ChatRooms)
     var name by ChatRooms.name
     var password by ChatRooms.password

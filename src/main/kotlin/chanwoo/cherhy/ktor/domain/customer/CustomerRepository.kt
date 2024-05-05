@@ -2,17 +2,18 @@ package chanwoo.cherhy.ktor.domain.customer
 
 import chanwoo.cherhy.ktor.api.CustomerRequest
 import chanwoo.cherhy.ktor.api.CustomerResponse
+import chanwoo.cherhy.ktor.util.CustomerId
 import chanwoo.cherhy.ktor.util.PageRequest
 import org.jetbrains.exposed.sql.selectAll
 
 interface CustomerRepository {
     fun save(request: CustomerRequest, encodedPassword: String)
+    fun update(id: CustomerId, request: CustomerRequest)
+    fun delete(id: CustomerId)
     fun findAll(request: PageRequest): List<CustomerResponse>
-    fun findById(id: Long): CustomerResponse
-    fun update(id: Long, request: CustomerRequest)
-    fun delete(id: Long)
+    fun findById(id: CustomerId): CustomerResponse
     fun findByUsername(username: String): CustomerResponse
-    fun findAllByIdIn(ids: List<Long>): List<CustomerResponse>
+    fun findAllByIdIn(ids: List<CustomerId>): List<CustomerResponse>
 }
 
 class CustomerRepositoryImpl: CustomerRepository {

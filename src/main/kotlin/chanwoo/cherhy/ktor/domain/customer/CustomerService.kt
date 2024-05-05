@@ -1,6 +1,7 @@
 package chanwoo.cherhy.ktor.domain.customer
 
 import chanwoo.cherhy.ktor.api.CustomerRequest
+import chanwoo.cherhy.ktor.util.CustomerId
 import chanwoo.cherhy.ktor.util.PageRequest
 
 class CustomerService(
@@ -13,13 +14,13 @@ class CustomerService(
 
     fun getAll(request: PageRequest) = customerRepository.findAll(request)
 
-    fun get(id: Long) = customerRepository.findById(id)
+    fun get(id: CustomerId) = customerRepository.findById(id)
 
-    fun getAll(ids: List<Long>) = customerRepository.findAllByIdIn(ids)
+    fun getAll(ids: List<CustomerId>) = customerRepository.findAllByIdIn(ids)
 
     fun get(username: String) = customerRepository.findByUsername(username)
 
-    fun update(id: Long, request: CustomerRequest) = customerRepository.update(id, request)
+    fun update(id: CustomerId, request: CustomerRequest) = customerRepository.update(id, request)
 
-    fun delete(id: Long) = customerRepository.delete(id)
+    fun delete(id: CustomerId) = customerRepository.delete(id)
 }
