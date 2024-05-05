@@ -1,8 +1,11 @@
 package chanwoo.cherhy.ktor.usecase
 
 import chanwoo.cherhy.ktor.api.CreateChatRoomRequest
+import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomService
 import chanwoo.cherhy.ktor.domain.customer.CustomerService
+import chanwoo.cherhy.ktor.util.CustomerId
+import chanwoo.cherhy.ktor.util.ChatRoomId
 import chanwoo.cherhy.ktor.util.encode
 import java.util.*
 
@@ -10,29 +13,35 @@ class CreateChatRoomUseCase(
     private val customerService: CustomerService,
     private val passwordEncoder: Base64.Encoder,
     private val chatRoomService: ChatRoomService,
+    private val chatRoomLinkService: ChatRoomLinkService,
 ) {
     fun execute(
         request: CreateChatRoomRequest,
-        ownerId: Long,
-    ) {
+        ownerId: CustomerId,
+    ): ChatRoomId {
         val encodedPassword = request.password?.let { passwordEncoder.encode(it) }
 
         val owner = customerService.get(ownerId)
         val targetCustomer = customerService.getAll(request.targetCustomerIds)
-        val countToCurrenUsers = targetCustomer.size + 1
+        val targetCustomerIds = targetCustomer.map { it.id }
+        val allCustomerIds = targetCustomerIds + ownerId
 
-        chatRoomService.create(
+        require(allCustomerIds.size <= request.maxUser) { "room is full" }
+
+        val chatRoom = chatRoomService.create(
             roomName = request.name,
             encodedPassword = encodedPassword,
             description = request.description,
             maxUsers = request.maxUser,
-            currentUsers = countToCurrenUsers,
+            currentUsers = allCustomerIds.size,
             ownerId = owner.id,
         )
 
-//        chatRoomInfoService.create(
-//            chatRoomId,
-//            listOf(owner.id, targetCustomer.id),
-//        )
+        chatRoomLinkService.create(
+            chatRoomId = chatRoom.id,
+            customerIds = allCustomerIds,
+        )
+
+        return chatRoom.id
     }
 }
