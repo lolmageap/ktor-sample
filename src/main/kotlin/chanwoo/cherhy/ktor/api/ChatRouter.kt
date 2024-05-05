@@ -1,36 +1,35 @@
 package chanwoo.cherhy.ktor.api
 
+import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.Connection
+import chanwoo.cherhy.ktor.util.*
 import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
 import chanwoo.cherhy.ktor.util.SecurityProperty.AUTHORITY
-import chanwoo.cherhy.ktor.util.jwt
-import chanwoo.cherhy.ktor.util.room
-import chanwoo.cherhy.ktor.util.username
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import mu.KotlinLogging
+import org.koin.ktor.ext.inject
 import java.util.*
 
-typealias Room = String
-
-private val connectionFactoryMap = Collections.synchronizedMap(
-    HashMap<Room, MutableList<Connection>>()
-)
+private val connectionFactoryMap =
+    Collections.synchronizedMap(
+        HashMap<ChatRoomId, MutableList<Connection>>()
+    )
 private val logger = KotlinLogging.logger { }
 
 fun Route.chat() {
+    val chatRoomLinkService: ChatRoomLinkService by inject()
+
     authenticate(AUTHORITY) {
         webSocket(ECHO) {
             val username = call.jwt.username
-            val room = call.room
+            val customerId = call.jwt.customerId
+            val roomId = call.chatRoomId
 
-            val connection = Connection(this)
-            connectionFactoryMap.getOrPut(
-                key = room,
-                defaultValue = { mutableListOf() }
-            ).add(connection)
+            chatRoomLinkService.ifAllowed(roomId, customerId)
+            val connection = connect(roomId)
 
             try {
                 for (frame in incoming) {
@@ -38,15 +37,23 @@ fun Route.chat() {
                     val receivedText = frame.readText()
                     val message = "$username: $receivedText"
 
-                    connectionFactoryMap[room]
+                    connectionFactoryMap[roomId]
                         ?.forEach { it.session.send(message) }
                 }
             } catch (e: Exception) {
                 logger.error { e.localizedMessage }
             } finally {
-                connectionFactoryMap[room]
+                connectionFactoryMap[roomId]
                     ?.remove(connection)
             }
         }
     }
 }
+
+private fun DefaultWebSocketServerSession.connect(chatRoomId: ChatRoomId) =
+    Connection(this).also { connection ->
+        connectionFactoryMap.getOrPut(
+            key = chatRoomId,
+            defaultValue = { mutableListOf() }
+        ).add(connection)
+    }
