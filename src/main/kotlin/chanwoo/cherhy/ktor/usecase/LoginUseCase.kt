@@ -4,7 +4,7 @@ import chanwoo.cherhy.ktor.api.CustomerRequest
 import chanwoo.cherhy.ktor.api.LoginRequest
 import chanwoo.cherhy.ktor.domain.customer.CustomerService
 import chanwoo.cherhy.ktor.util.JwtManager
-import chanwoo.cherhy.ktor.util.matches
+import chanwoo.cherhy.ktor.util.extension.matches
 import java.util.*
 
 class LoginUseCase(

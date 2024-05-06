@@ -3,7 +3,7 @@ package chanwoo.cherhy.ktor.domain.customer
 import chanwoo.cherhy.ktor.api.CustomerRequest
 import chanwoo.cherhy.ktor.api.CustomerResponse
 import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.PageRequest
+import chanwoo.cherhy.ktor.util.model.PageRequest
 import org.jetbrains.exposed.sql.selectAll
 
 interface CustomerRepository {

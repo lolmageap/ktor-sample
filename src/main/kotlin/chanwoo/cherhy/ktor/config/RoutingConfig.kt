@@ -3,7 +3,7 @@ package chanwoo.cherhy.ktor.config
 import chanwoo.cherhy.ktor.api.chat
 import chanwoo.cherhy.ktor.api.chatRoom
 import chanwoo.cherhy.ktor.api.customer
-import chanwoo.cherhy.ktor.util.EndPoint.HOME
+import chanwoo.cherhy.ktor.util.property.EndPoint.HOME
 import io.ktor.server.application.*
 import io.ktor.server.plugins.swagger.*
 import io.ktor.server.response.*

@@ -1,4 +1,4 @@
-package chanwoo.cherhy.ktor.util
+package chanwoo.cherhy.ktor.util.model
 
 data class PageRequest(
     val page: Int,

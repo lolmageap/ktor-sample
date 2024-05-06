@@ -1,4 +1,4 @@
-package chanwoo.cherhy.ktor.util
+package chanwoo.cherhy.ktor.util.property
 
 object EndPoint {
     const val HOME = "/"
@@ -19,8 +19,8 @@ object EndPoint {
         const val ECHO = CHAT
     }
 
-    object CHAT_ROOM {
-        private const val CHAT_ROOM = "/chat-room"
+    object CHATROOM {
+        private const val CHAT_ROOM = "/chatroom"
 
         const val CREATE_CHAT_ROOM = CHAT_ROOM
     }

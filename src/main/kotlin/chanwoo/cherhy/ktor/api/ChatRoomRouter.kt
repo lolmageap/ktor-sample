@@ -1,10 +1,10 @@
 package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.usecase.CreateChatRoomUseCase
-import chanwoo.cherhy.ktor.util.EndPoint.CHAT_ROOM.CREATE_CHAT_ROOM
-import chanwoo.cherhy.ktor.util.SecurityProperty.AUTHORITY
-import chanwoo.cherhy.ktor.util.jwt
-import chanwoo.cherhy.ktor.util.customerId
+import chanwoo.cherhy.ktor.util.property.EndPoint.CHATROOM.CREATE_CHAT_ROOM
+import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
+import chanwoo.cherhy.ktor.util.extension.jwt
+import chanwoo.cherhy.ktor.util.extension.customerId
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

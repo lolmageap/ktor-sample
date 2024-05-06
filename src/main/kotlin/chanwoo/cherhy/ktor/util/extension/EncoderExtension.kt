@@ -1,4 +1,4 @@
-package chanwoo.cherhy.ktor.util
+package chanwoo.cherhy.ktor.util.extension
 
 import java.util.*
 

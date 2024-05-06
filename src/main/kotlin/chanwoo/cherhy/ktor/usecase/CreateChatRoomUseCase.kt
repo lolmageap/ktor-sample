@@ -6,7 +6,7 @@ import chanwoo.cherhy.ktor.domain.chat.ChatRoomService
 import chanwoo.cherhy.ktor.domain.customer.CustomerService
 import chanwoo.cherhy.ktor.util.CustomerId
 import chanwoo.cherhy.ktor.util.ChatRoomId
-import chanwoo.cherhy.ktor.util.encode
+import chanwoo.cherhy.ktor.util.extension.encode
 import java.util.*
 
 class CreateChatRoomUseCase(

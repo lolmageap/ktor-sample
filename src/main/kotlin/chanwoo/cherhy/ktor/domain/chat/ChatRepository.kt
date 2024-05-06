@@ -1,7 +1,7 @@
 package chanwoo.cherhy.ktor.domain.chat
 
 import chanwoo.cherhy.ktor.domain.customer.Customers
-import chanwoo.cherhy.ktor.util.PageRequest
+import chanwoo.cherhy.ktor.util.model.PageRequest
 import org.jetbrains.exposed.sql.selectAll
 
 interface ChatRepository {

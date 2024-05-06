@@ -1,5 +1,6 @@
-package chanwoo.cherhy.ktor.util
+package chanwoo.cherhy.ktor.util.extension
 
+import chanwoo.cherhy.ktor.util.ChatRoomId
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.ktor.http.*
 import io.ktor.server.application.*
