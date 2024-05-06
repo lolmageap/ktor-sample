@@ -17,7 +17,7 @@ fun Application.configureJwt() {
     val jwtAudience = getJwt("audience")
     val jwtRealm = getJwt("realm")
 
-    authentication {
+    install(Authentication) {
         jwt(AUTHORITY) {
             realm = jwtRealm
             verifier(
@@ -26,8 +26,7 @@ fun Application.configureJwt() {
                     .withIssuer(jwtIssuer)
                     .build()
             )
-        }
-        jwt(AUTHORITY) {
+
             validate { credential ->
                 if (credential.payload.getClaim(USERNAME).asString() != "") {
                     JWTPrincipal(credential.payload)
@@ -35,8 +34,7 @@ fun Application.configureJwt() {
                     null
                 }
             }
-        }
-        jwt(AUTHORITY) {
+
             challenge { defaultScheme, realm ->
                 call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
             }
