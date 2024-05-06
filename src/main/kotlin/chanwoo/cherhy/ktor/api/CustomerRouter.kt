@@ -27,6 +27,7 @@ fun Route.customer() {
     post(LOGIN) {
         val request = call.receive<LoginRequest>()
         val jwt = loginUseCase.execute(request)
+        headers { append(HttpHeaders.Authorization, jwt) }
         call.respond(HttpStatusCode.OK, jwt)
     }
 
@@ -34,6 +35,7 @@ fun Route.customer() {
         val request = call.receive<CustomerRequest>()
         signupUseCase.execute(request)
         val jwt = loginUseCase.execute(request)
+        headers { append(HttpHeaders.Authorization, jwt) }
         call.respond(HttpStatusCode.Created, jwt)
     }
 
