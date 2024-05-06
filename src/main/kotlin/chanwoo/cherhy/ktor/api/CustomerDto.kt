@@ -2,6 +2,7 @@ package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.customer.Customer
 import chanwoo.cherhy.ktor.util.CustomerId
+import chanwoo.cherhy.ktor.util.CustomerName
 
 data class LoginRequest(
     val email: String,
@@ -17,7 +18,7 @@ data class CustomerRequest(
 
 data class CustomerResponse(
     val id: CustomerId,
-    val name: String,
+    val name: CustomerName,
     val email: String,
     val password: String,
     val phoneNumber: String?,

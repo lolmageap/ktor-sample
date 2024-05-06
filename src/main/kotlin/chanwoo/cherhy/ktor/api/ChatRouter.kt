@@ -2,9 +2,13 @@ package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.Connection
-import chanwoo.cherhy.ktor.util.*
-import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
-import chanwoo.cherhy.ktor.util.SecurityProperty.AUTHORITY
+import chanwoo.cherhy.ktor.util.ChatRoomId
+import chanwoo.cherhy.ktor.util.extension.chatRoomId
+import chanwoo.cherhy.ktor.util.extension.customerId
+import chanwoo.cherhy.ktor.util.extension.customerName
+import chanwoo.cherhy.ktor.util.extension.jwt
+import chanwoo.cherhy.ktor.util.property.EndPoint.CHAT.ECHO
+import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
@@ -24,26 +28,26 @@ fun Route.chat() {
 
     authenticate(AUTHORITY) {
         webSocket(ECHO) {
-            val username = call.jwt.username
+            val customerName = call.jwt.customerName
             val customerId = call.jwt.customerId
-            val roomId = call.chatRoomId
+            val chatRoomId = call.chatRoomId
 
-            chatRoomLinkService.ifAllowed(roomId, customerId)
-            val connection = connect(roomId)
+            chatRoomLinkService.ifAllowed(chatRoomId, customerId)
+            val connection = connect(chatRoomId)
 
             try {
                 for (frame in incoming) {
                     frame as? Frame.Text ?: continue
                     val receivedText = frame.readText()
-                    val message = "$username: $receivedText"
+                    val message = "$customerName: $receivedText"
 
-                    connectionFactoryMap[roomId]
+                    connectionFactoryMap[chatRoomId]
                         ?.forEach { it.session.send(message) }
                 }
             } catch (e: Exception) {
                 logger.error { e.localizedMessage }
             } finally {
-                connectionFactoryMap[roomId]
+                connectionFactoryMap[chatRoomId]
                     ?.remove(connection)
             }
         }

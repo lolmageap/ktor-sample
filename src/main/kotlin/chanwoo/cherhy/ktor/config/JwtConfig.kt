@@ -1,8 +1,8 @@
 package chanwoo.cherhy.ktor.config
 
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils.getJwt
-import chanwoo.cherhy.ktor.util.SecurityProperty.AUTHORITY
-import chanwoo.cherhy.ktor.util.SecurityProperty.USERNAME
+import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
+import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.http.*
@@ -28,7 +28,7 @@ fun Application.configureJwt() {
             )
 
             validate { credential ->
-                if (credential.payload.getClaim(USERNAME).asString() != "") {
+                if (credential.payload.getClaim(CUSTOMER_NAME).asString() != "") {
                     JWTPrincipal(credential.payload)
                 } else {
                     null
