@@ -12,9 +12,9 @@ fun main() {
 
 fun Application.module() {
     configureWebSocket()
+    configureJwt()
     configureJackson()
     configureDependencyInjection()
     configureRouting()
     configureDatabase()
-    configureJwt()
 }
