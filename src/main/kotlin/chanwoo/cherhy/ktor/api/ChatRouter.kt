@@ -3,6 +3,7 @@ package chanwoo.cherhy.ktor.api
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.Connection
 import chanwoo.cherhy.ktor.util.ChatRoomId
+import chanwoo.cherhy.ktor.util.CustomerId
 import chanwoo.cherhy.ktor.util.extension.chatRoomId
 import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.customerName
@@ -16,10 +17,11 @@ import io.ktor.websocket.*
 import mu.KotlinLogging
 import org.koin.ktor.ext.inject
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 private val connectionFactoryMap =
     Collections.synchronizedMap(
-        HashMap<ChatRoomId, MutableList<Connection>>()
+        ConcurrentHashMap<ChatRoomId, MutableList<Connection>>()
     )
 private val logger = KotlinLogging.logger { }
 
@@ -33,7 +35,7 @@ fun Route.chat() {
             val chatRoomId = call.chatRoomId
 
             chatRoomLinkService.ifAllowed(chatRoomId, customerId)
-            val connection = connect(chatRoomId)
+            val connection = createConnection(chatRoomId, customerId)
 
             try {
                 for (frame in incoming) {
@@ -54,8 +56,11 @@ fun Route.chat() {
     }
 }
 
-private fun DefaultWebSocketServerSession.connect(chatRoomId: ChatRoomId) =
-    Connection(this).also { connection ->
+private fun DefaultWebSocketServerSession.createConnection(
+    chatRoomId: ChatRoomId,
+    customerId: CustomerId,
+) =
+    Connection(this, customerId).also { connection ->
         connectionFactoryMap.getOrPut(
             key = chatRoomId,
             defaultValue = { mutableListOf() }
