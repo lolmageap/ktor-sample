@@ -15,10 +15,12 @@ interface ChatRoomRepository {
         ownerId: CustomerId,
     ): ChatRoomResponse
 
-    fun findById(chatRoomId: ChatRoomId): ChatRoomResponse
+    fun findById(
+        chatRoomId: ChatRoomId,
+    ): ChatRoomResponse
 }
 
-class ChatRoomRepositoryImpl: ChatRoomRepository {
+class ChatRoomRepositoryImpl : ChatRoomRepository {
     override fun save(
         roomName: String,
         encodedPassword: String?,
@@ -36,7 +38,9 @@ class ChatRoomRepositoryImpl: ChatRoomRepository {
             owner = EntityID(ownerId, Customers)
         }.let(ChatRoomResponse::of)
 
-    override fun findById(chatRoomId: ChatRoomId) =
+    override fun findById(
+        chatRoomId: ChatRoomId,
+    ) =
         ChatRoom.findById(chatRoomId)
             ?.let(ChatRoomResponse::of)
             ?: throw IllegalArgumentException("ChatRoom not found")

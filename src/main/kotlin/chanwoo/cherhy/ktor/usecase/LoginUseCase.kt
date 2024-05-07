@@ -12,14 +12,18 @@ class LoginUseCase(
     private val jwtManager: JwtManager,
     private val passwordEncoder: Base64.Encoder,
 ) {
-    fun execute(request: LoginRequest): String {
+    fun execute(
+        request: LoginRequest,
+    ): String {
         val customer = customerService.get(request.email)
         passwordEncoder.matches(request.password, customer.password)
 
         return jwtManager.createToken(customer.id, request.email)
     }
 
-    fun execute(request: CustomerRequest): String {
+    fun execute(
+        request: CustomerRequest,
+    ): String {
         val customer = customerService.get(request.email)
         passwordEncoder.matches(request.password, customer.password)
 

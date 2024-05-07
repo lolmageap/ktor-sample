@@ -1,6 +1,7 @@
 package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.chat.ChatRoom
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
 
 data class CreateChatRoomRequest(
     val targetCustomerIds: List<Long>,
@@ -16,7 +17,7 @@ data class ChatRoomResponse(
     val maxUser: Int,
     val currentUsers: Int,
     val totalChats: Int,
-    val ownerId: Long,
+    val owner: CustomerId,
 ) {
     companion object {
         fun of(chatRoom: ChatRoom): ChatRoomResponse {
@@ -26,7 +27,7 @@ data class ChatRoomResponse(
                 maxUser = chatRoom.maxUser,
                 currentUsers = chatRoom.currentUser,
                 totalChats = chatRoom.totalChats,
-                ownerId = chatRoom.owner.value,
+                owner = chatRoom.owner.value,
             )
         }
     }

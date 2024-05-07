@@ -9,7 +9,9 @@ class SignupUseCase(
     private val customerService: CustomerService,
     private val passwordEncoder: Base64.Encoder,
 ) {
-    fun execute(request: CustomerRequest) {
+    fun execute(
+        request: CustomerRequest,
+    ) {
         val encodedPassword = passwordEncoder.encode(request.password)
         customerService.save(request, encodedPassword)
     }

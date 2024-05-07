@@ -11,15 +11,28 @@ class CustomerService(
         encodedPassword: String,
     ) = customerRepository.save(request, encodedPassword)
 
-    fun getAll(request: PageRequest) = customerRepository.findAll(request)
+    fun getAll(
+        request: PageRequest,
+    ) = customerRepository.findAll(request)
 
-    fun get(id: CustomerId) = customerRepository.findById(id)
+    fun get(
+        id: CustomerId,
+    ) = customerRepository.findById(id)
 
-    fun getAll(ids: List<CustomerId>) = customerRepository.findAllByIdIn(ids)
+    fun getAll(
+        ids: List<CustomerId>,
+    ) = customerRepository.findAllByIdIn(ids)
 
-    fun get(username: String) = customerRepository.findByUsername(username)
+    fun get(
+        username: String,
+    ) = customerRepository.findByUsername(username)
 
-    fun update(id: CustomerId, request: CustomerRequest) = customerRepository.update(id, request)
+    fun update(
+        id: CustomerId,
+        request: CustomerRequest,
+    ) = customerRepository.update(id, request)
 
-    fun delete(id: CustomerId) = customerRepository.delete(id)
+    fun delete(
+        id: CustomerId,
+    ) = customerRepository.delete(id)
 }

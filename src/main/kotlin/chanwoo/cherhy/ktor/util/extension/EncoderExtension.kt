@@ -2,7 +2,9 @@ package chanwoo.cherhy.ktor.util.extension
 
 import java.util.*
 
-fun Base64.Encoder.encode(password: String) =
+fun Base64.Encoder.encode(
+    password: String,
+) =
     this.encodeToString(password.toByteArray())!!
 
 fun Base64.Encoder.matches(
