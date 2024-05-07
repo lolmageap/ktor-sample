@@ -1,8 +1,8 @@
 package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.customer.Customer
-import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.CustomerName
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
+import chanwoo.cherhy.ktor.domain.customer.CustomerName
 
 data class LoginRequest(
     val email: String,

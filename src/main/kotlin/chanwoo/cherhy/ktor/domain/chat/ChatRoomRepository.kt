@@ -1,9 +1,8 @@
 package chanwoo.cherhy.ktor.domain.chat
 
 import chanwoo.cherhy.ktor.api.ChatRoomResponse
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.domain.customer.Customers
-import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.ChatRoomId
 import org.jetbrains.exposed.dao.id.EntityID
 
 interface ChatRoomRepository {

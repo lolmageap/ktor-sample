@@ -1,11 +1,11 @@
 package chanwoo.cherhy.ktor.usecase
 
 import chanwoo.cherhy.ktor.api.CreateChatRoomRequest
+import chanwoo.cherhy.ktor.domain.chat.ChatRoomId
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomService
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.domain.customer.CustomerService
-import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.ChatRoomId
 import chanwoo.cherhy.ktor.util.extension.encode
 import java.util.*
 

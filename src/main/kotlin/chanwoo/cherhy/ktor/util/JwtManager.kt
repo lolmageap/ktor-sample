@@ -1,7 +1,9 @@
 package chanwoo.cherhy.ktor.util
 
-import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
+import chanwoo.cherhy.ktor.domain.customer.CustomerName
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_ID
+import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import java.util.*

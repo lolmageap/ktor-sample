@@ -3,10 +3,11 @@ package chanwoo.cherhy.ktor.domain.customer
 import chanwoo.cherhy.ktor.util.model.BaseEntity
 import chanwoo.cherhy.ktor.util.model.BaseEntityClass
 import chanwoo.cherhy.ktor.util.model.BaseLongIdTable
-import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.CustomerName
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.Column
+
+typealias CustomerId = Long
+typealias CustomerName = String
 
 object Customers: BaseLongIdTable("customer", "id") {
     val name: Column<CustomerName> = varchar("name", 50)

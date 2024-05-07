@@ -1,7 +1,6 @@
 package chanwoo.cherhy.ktor.domain.chat
 
-import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.ChatRoomId
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
 
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,

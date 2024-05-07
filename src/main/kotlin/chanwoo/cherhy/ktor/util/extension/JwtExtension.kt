@@ -1,9 +1,9 @@
 package chanwoo.cherhy.ktor.util.extension
 
-import chanwoo.cherhy.ktor.util.CustomerId
-import chanwoo.cherhy.ktor.util.CustomerName
-import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
+import chanwoo.cherhy.ktor.domain.customer.CustomerName
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_ID
+import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
 import io.ktor.server.auth.jwt.*
 
 val JWTPrincipal?.customerName: CustomerName
