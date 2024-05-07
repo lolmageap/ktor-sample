@@ -2,6 +2,7 @@ package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomId
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
+import chanwoo.cherhy.ktor.domain.chat.ChatService
 import chanwoo.cherhy.ktor.domain.chat.Connection
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.extension.chatRoomId
@@ -27,6 +28,7 @@ private val logger = KotlinLogging.logger { }
 
 fun Route.chat() {
     val chatRoomLinkService: ChatRoomLinkService by inject()
+    val chatService: ChatService by inject()
 
     authenticate(AUTHORITY) {
         webSocket(ECHO) {
@@ -44,7 +46,10 @@ fun Route.chat() {
                     val message = "$customerName: $receivedText"
 
                     connectionFactoryMap[chatRoomId]
-                        ?.forEach { it.session.send(message) }
+                        ?.forEach {
+                            it.session.send(message)
+                            chatService.save(chatRoomId, customerId, receivedText)
+                        }
                 }
             } catch (e: Exception) {
                 logger.error { e.localizedMessage }
