@@ -1,9 +1,9 @@
 package chanwoo.cherhy.ktor.api
 
+import chanwoo.cherhy.ktor.domain.chat.ChatRoomId
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.Connection
-import chanwoo.cherhy.ktor.util.ChatRoomId
-import chanwoo.cherhy.ktor.util.CustomerId
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.extension.chatRoomId
 import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.customerName
@@ -61,8 +61,5 @@ private fun DefaultWebSocketServerSession.createConnection(
     customerId: CustomerId,
 ) =
     Connection(this, customerId).also { connection ->
-        connectionFactoryMap.getOrPut(
-            key = chatRoomId,
-            defaultValue = { mutableListOf() }
-        ).add(connection)
+        connectionFactoryMap.getOrPut(chatRoomId) { mutableListOf() }.add(connection)
     }
