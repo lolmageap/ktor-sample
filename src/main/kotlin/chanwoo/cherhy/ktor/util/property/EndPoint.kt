@@ -17,6 +17,7 @@ object EndPoint {
         private const val CHAT = "/chat"
 
         const val ECHO = CHAT
+        const val BROADCAST = "$CHAT/broadcast"
     }
 
     object CHATROOM {
