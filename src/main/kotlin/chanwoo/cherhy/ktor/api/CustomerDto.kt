@@ -24,15 +24,16 @@ data class CustomerResponse(
     val phoneNumber: String?,
 ) {
     companion object {
-        fun of(customer : Customer) =
-            with(customer) {
-                CustomerResponse(
-                    id = id.value,
-                    name = name,
-                    email = email,
-                    password = password,
-                    phoneNumber = phoneNumber
-                )
-            }
+        fun of(
+            customer: Customer,
+        ) = with(customer) {
+            CustomerResponse(
+                id = id.value,
+                name = name,
+                email = email,
+                password = password,
+                phoneNumber = phoneNumber,
+            )
+        }
     }
 }
