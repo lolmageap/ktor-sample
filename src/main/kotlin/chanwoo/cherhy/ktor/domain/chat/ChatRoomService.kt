@@ -22,6 +22,8 @@ class ChatRoomService(
             ownerId = ownerId,
         )
 
-    fun get(chatRoomId: ChatRoomId) =
+    fun get(
+        chatRoomId: ChatRoomId,
+    ) =
         chatRoomRepository.findById(chatRoomId)
 }
