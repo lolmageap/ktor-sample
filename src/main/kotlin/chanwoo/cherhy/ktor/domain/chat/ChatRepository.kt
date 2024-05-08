@@ -1,38 +1,44 @@
 package chanwoo.cherhy.ktor.domain.chat
 
+import chanwoo.cherhy.ktor.api.ChatResponse
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.domain.customer.Customers
 import chanwoo.cherhy.ktor.util.model.PageRequest
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SortOrder
 
 interface ChatRepository {
-    fun findAllContent(
-        pageRequest: PageRequest,
-    ): List<String>
-
     fun save(
         chatRoomId: ChatRoomId,
         customerId: CustomerId,
-        text: String,
-    ) {
-        TODO("Not yet implemented")
-    }
+        message: String,
+    )
+
+    fun findAll(
+        chatRoomId: ChatRoomId,
+        pageRequest: PageRequest,
+    ): List<ChatResponse>
 }
 
-class ChatRepositoryImpl: ChatRepository {
-    override fun findAllContent(
-        pageRequest: PageRequest,
-    ) =
-        Chat.find { Chats.sender eq Customers.id }
-            .limit(pageRequest.size, pageRequest.offset)
-            .map { it.content }
+class ChatRepositoryImpl : ChatRepository {
+    override fun save(
+        chatRoomId: ChatRoomId,
+        customerId: CustomerId,
+        message: String,
+    ) {
+        Chat.new {
+            content = message
+            sender = EntityID(customerId, Customers)
+            chatRoom = EntityID(chatRoomId, ChatRooms)
+        }
+    }
 
-    fun findWithCustomer(
-        pageRequest: PageRequest,
+    override fun findAll(
+        chatRoomId: ChatRoomId,
+        pageRequest: PageRequest
     ) =
-        Chats.innerJoin(Customers)
-            .selectAll()
+        Chat.find { Chats.chatRoom eq chatRoomId }
             .limit(pageRequest.size, pageRequest.offset)
-            .map { it[Chats.content] }
-            .toList()
+            .orderBy(Chats.createdAt to SortOrder.DESC)
+            .map(ChatResponse::of)
 }

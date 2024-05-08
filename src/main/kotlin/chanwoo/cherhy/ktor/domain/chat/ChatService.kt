@@ -1,6 +1,7 @@
 package chanwoo.cherhy.ktor.domain.chat
 
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
+import chanwoo.cherhy.ktor.util.model.PageRequest
 
 class ChatService(
     private val chatRepository: ChatRepository,
@@ -8,8 +9,13 @@ class ChatService(
     fun save(
         chatRoomId: ChatRoomId,
         customerId: CustomerId,
-        text: String,
-    ) {
-        chatRepository.save(chatRoomId, customerId, text)
-    }
+        message: String,
+    ) =
+        chatRepository.save(chatRoomId, customerId, message)
+
+    fun getAll(
+        chatRoomId: ChatRoomId,
+        pageRequest: PageRequest,
+    ) =
+        chatRepository.findAll(chatRoomId, pageRequest)
 }
