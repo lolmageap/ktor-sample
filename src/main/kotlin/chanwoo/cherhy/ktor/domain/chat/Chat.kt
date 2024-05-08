@@ -13,10 +13,12 @@ typealias ChatId = Long
 object Chats : BaseLongIdTable("chat", "id") {
     val content = varchar("content", 5000)
     val sender: Column<EntityID<CustomerId>> = reference("customer_id", Customers)
+    val chatRoom: Column<EntityID<ChatRoomId>> = reference("chat_room_id", ChatRooms)
 }
 
 class Chat(id: EntityID<ChatId>) : BaseEntity(id, Chats) {
     companion object : BaseEntityClass<Chat>(Chats)
     var content by Chats.content
     var sender by Chats.sender
+    var chatRoom by Chats.chatRoom
 }
