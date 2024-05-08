@@ -9,9 +9,15 @@ import chanwoo.cherhy.ktor.util.extension.chatRoomId
 import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.customerName
 import chanwoo.cherhy.ktor.util.extension.jwt
+import chanwoo.cherhy.ktor.util.model.PageRequest
 import chanwoo.cherhy.ktor.util.property.EndPoint.CHAT.ECHO
+import chanwoo.cherhy.ktor.util.property.EndPoint.CHAT.GET_CHAT_HISTORY
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
+import io.ktor.http.*
+import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
@@ -57,6 +63,18 @@ fun Route.chat() {
                 connectionFactoryMap[chatRoomId]
                     ?.remove(connection)
             }
+        }
+    }
+
+    // TODO: 회원이 속한 채팅방 인지 확인
+    authenticate(AUTHORITY) {
+        get(GET_CHAT_HISTORY) {
+            val customerId = call.jwt.customerId
+            val chatRoomId = call.chatRoomId
+            val request = call.receive<PageRequest>()
+
+            val chatResponses = chatService.getAll(chatRoomId, request)
+            call.respond(HttpStatusCode.OK, chatResponses)
         }
     }
 }
