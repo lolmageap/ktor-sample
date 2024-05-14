@@ -26,4 +26,13 @@ object EndPoint {
 
         const val CREATE_CHAT_ROOM = CHAT_ROOM
     }
+
+    object VIDEO {
+        private const val VIDEO = "/videos"
+
+        const val GET_VIDEO = "$VIDEO/{video-id}"
+        const val UPLOAD_VIDEO = VIDEO
+        const val UPDATE_VIDEO = VIDEO
+        const val DELETE_VIDEO = VIDEO
+    }
 }
