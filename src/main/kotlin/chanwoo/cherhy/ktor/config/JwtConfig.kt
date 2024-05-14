@@ -1,6 +1,10 @@
 package chanwoo.cherhy.ktor.config
 
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils.getJwt
+import chanwoo.cherhy.ktor.util.property.JwtProperty.AUDIENCE
+import chanwoo.cherhy.ktor.util.property.JwtProperty.ISSUER
+import chanwoo.cherhy.ktor.util.property.JwtProperty.REALM
+import chanwoo.cherhy.ktor.util.property.JwtProperty.SECRET
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
 import com.auth0.jwt.JWT
@@ -12,10 +16,10 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 
 fun Application.configureJwt() {
-    val jwtSecret = getJwt("secret")
-    val jwtIssuer = getJwt("issuer")
-    val jwtAudience = getJwt("audience")
-    val jwtRealm = getJwt("realm")
+    val jwtSecret = getJwt(SECRET)
+    val jwtIssuer = getJwt(ISSUER)
+    val jwtAudience = getJwt(AUDIENCE)
+    val jwtRealm = getJwt(REALM)
 
     install(Authentication) {
         jwt(AUTHORITY) {
