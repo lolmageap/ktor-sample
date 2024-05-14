@@ -16,4 +16,12 @@ object ApplicationConfigUtils {
     fun getJwt(
         key: String,
     ) = getConfigProperty("jwt.$key")
+
+    fun getMinio(
+        key: String,
+    ) = getConfigProperty("minio.$key")
+
+    fun getStreaming(
+        key: String,
+    ) = getConfigProperty("app.streaming.$key").toLong()
 }
