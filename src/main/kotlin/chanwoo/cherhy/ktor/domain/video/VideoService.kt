@@ -1,31 +1,34 @@
 package chanwoo.cherhy.ktor.domain.video
 
+import chanwoo.cherhy.ktor.api.UploadVideoRequest
+import chanwoo.cherhy.ktor.config.MinioConfig
+import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils.getStreaming
 import chanwoo.cherhy.ktor.util.property.MinioProperty
 import chanwoo.cherhy.ktor.util.property.StreamingProperty.CHUNK_SIZE
 import chanwoo.cherhy.ktor.util.property.StreamingProperty.OBJECT_PART_SIZE
-import io.minio.MinioClient
 import io.minio.PutObjectArgs
-import java.io.ByteArrayInputStream
 
-class StreamingService(
-    private val minioClient: MinioClient,
+class VideoService(
+    private val videoRepository: VideoRepository,
 ) {
+    private val minioClient = MinioConfig.init()
+
     fun getVideo() {
         TODO("아직 미구현~!")
     }
 
     fun uploadVideo(
-        name: String,
-        videoBytes: ByteArrayInputStream,
+        customer: CustomerId,
+        video: UploadVideoRequest,
     ) {
-        // TODO: name encoding 하자.
+        videoRepository.save(customer, video)
         minioClient.putObject(
             PutObjectArgs.builder()
                 .bucket(bucket)
-                .`object`(name)
-                .stream(videoBytes, videoBytes.available().toLong(), objectPartSize)
+                .`object`(video.uniqueName)
+                .stream(video.data, video.size, objectPartSize)
                 .build()
         )
     }
