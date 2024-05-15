@@ -1,4 +1,4 @@
-package chanwoo.cherhy.ktor.util.property
+package chanwoo.cherhy.ktor.util
 
 object EndPoint {
     const val HOME = "/"
@@ -31,8 +31,9 @@ object EndPoint {
         private const val VIDEO = "/videos"
 
         const val GET_VIDEO = "$VIDEO/{video-id}"
+        const val GET_VIDEOS = VIDEO
         const val UPLOAD_VIDEO = VIDEO
-        const val UPDATE_VIDEO = VIDEO
-        const val DELETE_VIDEO = VIDEO
+        const val UPDATE_VIDEO = "$VIDEO/{video-id}"
+        const val DELETE_VIDEO = "$VIDEO/{video-id}"
     }
 }
