@@ -1,6 +1,8 @@
 package chanwoo.cherhy.ktor.util.extension
 
+import chanwoo.cherhy.ktor.api.UploadVideoRequest
 import chanwoo.cherhy.ktor.domain.chat.ChatRoomId
+import chanwoo.cherhy.ktor.domain.video.VideoId
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.ktor.http.*
 import io.ktor.http.content.*
@@ -11,6 +13,7 @@ import io.ktor.server.request.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.nio.file.AccessDeniedException
+import java.util.UUID
 
 val mapper = jacksonObjectMapper()
 
@@ -27,8 +30,16 @@ val ApplicationCall.chatRoomId: ChatRoomId
         ?.toLong()
         ?: throw IllegalArgumentException("room-id is required.")
 
-suspend fun ApplicationCall.getVideo(): ByteArrayInputStream {
+val ApplicationCall.videoId: VideoId
+    get() = this.parameters["video-id"]
+        ?.toLong()
+        ?: throw IllegalArgumentException("video-id is required.")
+
+suspend fun ApplicationCall.getVideo(): UploadVideoRequest {
     val multipart = this.receiveMultipart()
+    val videoName = multipart.readPart()?.name
+        ?: throw IllegalArgumentException("video is required.")
+
     val byteArrayOutputStream = ByteArrayOutputStream()
 
     multipart.forEachPart { part ->
@@ -40,7 +51,13 @@ suspend fun ApplicationCall.getVideo(): ByteArrayInputStream {
         part.dispose()
     }
 
-    return ByteArrayInputStream(byteArrayOutputStream.toByteArray())
+    val data = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
+
+    return UploadVideoRequest.of(
+        name = videoName,
+        uniqueName = UUID.randomUUID().toString(),
+        data = data,
+    )
 }
 
 inline fun <reified T : Any> ApplicationCall.getQueryParams(): T {
