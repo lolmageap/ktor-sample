@@ -3,11 +3,11 @@ package chanwoo.cherhy.ktor.api
 import chanwoo.cherhy.ktor.domain.customer.CustomerService
 import chanwoo.cherhy.ktor.usecase.LoginUseCase
 import chanwoo.cherhy.ktor.usecase.SignupUseCase
-import chanwoo.cherhy.ktor.util.property.EndPoint.CUSTOMER.DELETE_CUSTOMER
-import chanwoo.cherhy.ktor.util.property.EndPoint.CUSTOMER.GET_ME
-import chanwoo.cherhy.ktor.util.property.EndPoint.CUSTOMER.LOGIN
-import chanwoo.cherhy.ktor.util.property.EndPoint.CUSTOMER.SIGN_UP
-import chanwoo.cherhy.ktor.util.property.EndPoint.CUSTOMER.UPDATE_CUSTOMER
+import chanwoo.cherhy.ktor.util.EndPoint.CUSTOMER.DELETE_CUSTOMER
+import chanwoo.cherhy.ktor.util.EndPoint.CUSTOMER.GET_ME
+import chanwoo.cherhy.ktor.util.EndPoint.CUSTOMER.LOGIN
+import chanwoo.cherhy.ktor.util.EndPoint.CUSTOMER.SIGN_UP
+import chanwoo.cherhy.ktor.util.EndPoint.CUSTOMER.UPDATE_CUSTOMER
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import chanwoo.cherhy.ktor.util.extension.jwt
 import chanwoo.cherhy.ktor.util.extension.customerId

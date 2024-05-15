@@ -10,8 +10,8 @@ import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.customerName
 import chanwoo.cherhy.ktor.util.extension.jwt
 import chanwoo.cherhy.ktor.util.model.PageRequest
-import chanwoo.cherhy.ktor.util.property.EndPoint.CHAT.ECHO
-import chanwoo.cherhy.ktor.util.property.EndPoint.CHAT.GET_CHAT_HISTORY
+import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
+import chanwoo.cherhy.ktor.util.EndPoint.CHAT.GET_CHAT_HISTORY
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import io.ktor.http.*
 import io.ktor.server.application.*
