@@ -5,9 +5,11 @@ import chanwoo.cherhy.ktor.config.MinioConfig
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils.getStreaming
-import chanwoo.cherhy.ktor.util.property.MinioProperty
+import chanwoo.cherhy.ktor.util.property.MinioProperty.BUCKET
 import chanwoo.cherhy.ktor.util.property.StreamingProperty.CHUNK_SIZE
 import chanwoo.cherhy.ktor.util.property.StreamingProperty.OBJECT_PART_SIZE
+import io.minio.GetObjectArgs
+import io.minio.MinioClient
 import io.minio.PutObjectArgs
 
 class VideoService(
@@ -15,8 +17,16 @@ class VideoService(
 ) {
     private val minioClient = MinioConfig.init()
 
-    fun getVideo() {
-        TODO("아직 미구현~!")
+    fun getVideo(
+        customer: CustomerId,
+        video: VideoId,
+    ): ByteArray {
+        val videoInformation = videoRepository.findById(video)
+        return if (videoInformation.owner == customer) {
+            minioClient.getFullVideo(videoInformation.uniqueName)
+        } else {
+            throw IllegalArgumentException("해당 비디오에 접근할 권한이 없습니다.")
+        }
     }
 
     fun uploadVideo(
@@ -33,9 +43,17 @@ class VideoService(
         )
     }
 
+    private fun MinioClient.getFullVideo(uniqueName: String) =
+        minioClient.getObject(
+            GetObjectArgs.builder()
+                .bucket(bucket)
+                .`object`(uniqueName)
+                .build()
+        ).readAllBytes()
+
     companion object {
         private val chunkSize = getStreaming(CHUNK_SIZE)
         private val objectPartSize = getStreaming(OBJECT_PART_SIZE)
-        private val bucket = ApplicationConfigUtils.getMinio(MinioProperty.BUCKET)
+        private val bucket = ApplicationConfigUtils.getMinio(BUCKET)
     }
 }
