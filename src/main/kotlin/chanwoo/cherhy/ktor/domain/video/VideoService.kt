@@ -20,10 +20,12 @@ class VideoService(
     fun getVideo(
         customer: CustomerId,
         video: VideoId,
+        lastVideoByte: Long,
     ): ByteArray {
         val videoInformation = videoRepository.findById(video)
         return if (videoInformation.owner == customer) {
-            minioClient.getFullVideo(videoInformation.uniqueName)
+            minioClient.fetch(videoInformation.uniqueName, lastVideoByte)
+                .readAllBytes()
         } else {
             throw IllegalArgumentException("해당 비디오에 접근할 권한이 없습니다.")
         }
@@ -43,13 +45,19 @@ class VideoService(
         )
     }
 
-    private fun MinioClient.getFullVideo(uniqueName: String) =
+    private fun MinioClient.fetch(
+        uniqueName: String,
+        lastVideoByte: Long,
+    ) =
         minioClient.getObject(
-            GetObjectArgs.builder()
+            GetObjectArgs
+                .builder()
                 .bucket(bucket)
+                .offset(lastVideoByte)
+                .length(chunkSize)
                 .`object`(uniqueName)
                 .build()
-        ).readAllBytes()
+        )
 
     companion object {
         private val chunkSize = getStreaming(CHUNK_SIZE)
