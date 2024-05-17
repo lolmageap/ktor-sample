@@ -35,6 +35,13 @@ val ApplicationCall.videoId: VideoId
         ?.toLong()
         ?: throw IllegalArgumentException("video-id is required.")
 
+val ApplicationCall.lastVideoByte: Long
+    get() = this.request.headers["Range"]
+        ?.substringAfter("bytes=")
+        ?.substringBefore("-")
+        ?.toLong()
+        ?: 0
+
 suspend fun ApplicationCall.getVideo(): UploadVideoRequest {
     val multipart = this.receiveMultipart()
     val videoName = multipart.readPart()?.name
