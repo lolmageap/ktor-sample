@@ -1,13 +1,10 @@
 package chanwoo.cherhy.ktor.api
 
 import chanwoo.cherhy.ktor.domain.video.VideoService
-import chanwoo.cherhy.ktor.util.extension.customerId
-import chanwoo.cherhy.ktor.util.extension.getVideo
-import chanwoo.cherhy.ktor.util.extension.jwt
 import chanwoo.cherhy.ktor.util.EndPoint.VIDEO.GET_VIDEO
 import chanwoo.cherhy.ktor.util.EndPoint.VIDEO.GET_VIDEOS
 import chanwoo.cherhy.ktor.util.EndPoint.VIDEO.UPLOAD_VIDEO
-import chanwoo.cherhy.ktor.util.extension.videoId
+import chanwoo.cherhy.ktor.util.extension.*
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -31,13 +28,24 @@ fun Route.video() {
         get(GET_VIDEO) {
             val customer = call.jwt.customerId
             val videoId = call.videoId
-            val video = videoService.getVideo(customer, videoId)
+            val lastVideoByte = call.lastVideoByte
+            val video = videoService.getVideo(customer, videoId, lastVideoByte)
 
-            call.respondBytes(
-                bytes = video,
-                contentType = call.request.contentType(),
-                status = HttpStatusCode.OK,
-            )
+//            call.response.header("Content-Type", "video/mp4")
+//            call.response.header("Accept-Ranges", "bytes")
+//            call.response.header(
+//                "Content-Length",
+//                calculateContentLengthHeader(parsedRange, video.size)
+//            )
+//            call.response.header(
+//                "Content-Range",
+//                constructContentRangeHeader(parsedRange, chunkWithMetadata.metadata.size)
+//            )
+//
+//            call.respondBytes(
+//                status = HttpStatusCode.PartialContent,
+//                bytes = chunkWithMetadata.chunk,
+//            )
         }
     }
 
