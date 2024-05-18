@@ -5,7 +5,6 @@ import chanwoo.cherhy.ktor.api.VideoResponse
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.domain.customer.Customers
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.selectAll
 
 interface VideoRepository {
     fun save(
@@ -13,7 +12,9 @@ interface VideoRepository {
         request: UploadVideoRequest,
     ): VideoResponse
 
-    fun findAll(): List<VideoResponse>
+    fun findAll(
+        customer: CustomerId,
+    ): List<VideoResponse>
 
     fun findById(
         id: VideoId,
@@ -32,9 +33,10 @@ class VideoRepositoryImpl : VideoRepository {
             owner = EntityID(customer, Customers)
         }.let(VideoResponse::of)
 
-    override fun findAll() =
-        Videos.selectAll()
-            .map(Video::wrapRow)
+    override fun findAll(
+        customer: CustomerId,
+    ) =
+        Video.find{ Videos.owner eq customer }
             .map(VideoResponse::of)
 
     override fun findById(
