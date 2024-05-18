@@ -1,6 +1,7 @@
 package chanwoo.cherhy.ktor.domain.video
 
 import chanwoo.cherhy.ktor.api.UploadVideoRequest
+import chanwoo.cherhy.ktor.api.VideoResponse
 import chanwoo.cherhy.ktor.config.MinioConfig
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils
@@ -18,17 +19,13 @@ class VideoService(
     private val minioClient = MinioConfig.init()
 
     fun getVideo(
-        customer: CustomerId,
-        video: VideoId,
+        customerId: CustomerId,
+        videoId: VideoId,
         lastVideoByte: Long,
     ): ByteArray {
-        val videoInformation = videoRepository.findById(video)
-        return if (videoInformation.owner == customer) {
-            minioClient.fetch(videoInformation.uniqueName, lastVideoByte)
-                .readAllBytes()
-        } else {
-            throw IllegalArgumentException("해당 비디오에 접근할 권한이 없습니다.")
-        }
+        val videoInformation = videoRepository.findById(videoId)
+        require(videoInformation.owner == customerId) { "해당 비디오에 접근할 권한이 없습니다." }
+        return minioClient.fetchVideo(videoInformation.uniqueName, lastVideoByte).readAllBytes()
     }
 
     fun uploadVideo(
@@ -45,7 +42,7 @@ class VideoService(
         )
     }
 
-    private fun MinioClient.fetch(
+    private fun MinioClient.fetchVideo(
         uniqueName: String,
         lastVideoByte: Long,
     ) =
@@ -58,6 +55,10 @@ class VideoService(
                 .`object`(uniqueName)
                 .build()
         )
+
+    fun getVideos(customer: CustomerId): List<VideoResponse> {
+        return videoRepository.findAll(customer)
+    }
 
     companion object {
         private val chunkSize = getStreaming(CHUNK_SIZE)
