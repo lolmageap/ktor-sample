@@ -10,6 +10,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
+import io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_RANGE
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.nio.file.AccessDeniedException
@@ -36,7 +37,7 @@ val ApplicationCall.videoId: VideoId
         ?: throw IllegalArgumentException("video-id is required.")
 
 val ApplicationCall.lastVideoByte: Long
-    get() = this.request.headers["Range"]
+    get() = this.request.headers[CONTENT_RANGE]
         ?.substringAfter("bytes=")
         ?.substringBefore("-")
         ?.toLong()
@@ -44,8 +45,12 @@ val ApplicationCall.lastVideoByte: Long
 
 suspend fun ApplicationCall.getVideo(): UploadVideoRequest {
     val multipart = this.receiveMultipart()
+
     val videoName = multipart.readPart()?.name
         ?: throw IllegalArgumentException("video is required.")
+
+    val isVideo = videoName.endsWith(".mp4")
+    require(isVideo) { "Invalid video format." }
 
     val byteArrayOutputStream = ByteArrayOutputStream()
 
@@ -58,7 +63,9 @@ suspend fun ApplicationCall.getVideo(): UploadVideoRequest {
         part.dispose()
     }
 
-    val data = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
+    val data = ByteArrayInputStream(
+        byteArrayOutputStream.toByteArray()
+    )
 
     return UploadVideoRequest.of(
         name = videoName,
