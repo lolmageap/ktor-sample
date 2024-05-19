@@ -32,6 +32,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     implementation("io.ktor:ktor-server-status-pages")
+    implementation("io.ktor:ktor-server-partial-content:2.3.11")
 
     implementation("io.ktor:ktor-server-auth-jvm")
     implementation("io.ktor:ktor-server-auth-jwt-jvm")
