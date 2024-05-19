@@ -36,4 +36,11 @@ object EndPoint {
         const val UPDATE_VIDEO = "$VIDEO/{video-id}"
         const val DELETE_VIDEO = "$VIDEO/{video-id}"
     }
+
+    object LIVESTREAM {
+        private const val LIVE_STREAM = "/live-stream"
+
+        const val CALLED_LIVE_STREAM = "$LIVE_STREAM/{live-stream-id}"
+        const val CALL_LIVE_STREAM = "$LIVE_STREAM/{customer-id}"
+    }
 }
