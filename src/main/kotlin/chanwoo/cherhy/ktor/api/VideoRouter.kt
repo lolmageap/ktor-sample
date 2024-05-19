@@ -30,7 +30,7 @@ fun Route.video() {
     authenticate(AUTHORITY) {
         get(GET_VIDEO) {
             val customerId = call.jwt.customerId
-            val videoId = call.videoId
+            val videoId = call.pathVariable.videoId
             val lastVideoByte = call.lastVideoByte
             val video = videoService.getVideo(customerId, videoId, lastVideoByte)
 

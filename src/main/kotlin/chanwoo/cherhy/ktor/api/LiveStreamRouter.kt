@@ -7,7 +7,7 @@ import chanwoo.cherhy.ktor.util.EndPoint.LIVESTREAM.CALLED_LIVE_STREAM
 import chanwoo.cherhy.ktor.util.EndPoint.LIVESTREAM.CALL_LIVE_STREAM
 import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.jwt
-import chanwoo.cherhy.ktor.util.extension.liveStreamId
+import chanwoo.cherhy.ktor.util.extension.pathVariable
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
@@ -30,7 +30,7 @@ fun Route.liveStream() {
     authenticate(AUTHORITY) {
         webSocket(CALL_LIVE_STREAM) {
             val callCustomerId = call.jwt.customerId
-            val calledCustomerId = call.customerId
+            val calledCustomerId = call.pathVariable.customerId
 
             // TODO: Implement allowed check logic
             val connection = createConnection(callCustomerId, calledCustomerId)
@@ -52,7 +52,7 @@ fun Route.liveStream() {
     authenticate(AUTHORITY) {
         webSocket(CALLED_LIVE_STREAM) {
             val customerId = call.jwt.customerId
-            val liveStreamId = call.liveStreamId
+            val liveStreamId = call.pathVariable.liveStreamId
 
         }
     }

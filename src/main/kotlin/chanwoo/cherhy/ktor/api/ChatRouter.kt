@@ -7,10 +7,10 @@ import chanwoo.cherhy.ktor.domain.chat.Connection
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
 import chanwoo.cherhy.ktor.util.EndPoint.CHAT.GET_CHAT_HISTORY
-import chanwoo.cherhy.ktor.util.extension.chatRoomId
 import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.customerName
 import chanwoo.cherhy.ktor.util.extension.jwt
+import chanwoo.cherhy.ktor.util.extension.pathVariable
 import chanwoo.cherhy.ktor.util.model.PageRequest
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import io.ktor.http.*
@@ -40,7 +40,7 @@ fun Route.chat() {
         webSocket(ECHO) {
             val customerName = call.jwt.customerName
             val customerId = call.jwt.customerId
-            val chatRoomId = call.chatRoomId
+            val chatRoomId = call.pathVariable.chatRoomId
 
             chatRoomLinkService.ifAllowed(chatRoomId, customerId)
             val connection = createConnection(chatRoomId, customerId)
@@ -70,7 +70,7 @@ fun Route.chat() {
     authenticate(AUTHORITY) {
         get(GET_CHAT_HISTORY) {
             val customerId = call.jwt.customerId
-            val chatRoomId = call.chatRoomId
+            val chatRoomId = call.pathVariable.chatRoomId
             val request = call.receive<PageRequest>()
 
             val chatResponses = chatService.getAll(chatRoomId, request)
