@@ -13,5 +13,6 @@ fun Application.configureRouting() {
         chat()
         chatRoom()
         video()
+        liveStream()
     }
 }
