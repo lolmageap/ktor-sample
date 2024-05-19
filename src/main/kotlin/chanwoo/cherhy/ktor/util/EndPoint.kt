@@ -17,7 +17,7 @@ object EndPoint {
         private const val CHAT = "/chat"
 
         const val ECHO = CHAT
-        const val GET_CHAT_HISTORY = "$CHAT/history/{room-id}"
+        const val GET_CHAT_HISTORY = "$CHAT/history/{chat-room-id}"
         const val BROADCAST = "$CHAT/broadcast"
     }
 
