@@ -4,6 +4,9 @@ import chanwoo.cherhy.ktor.domain.chat.*
 import chanwoo.cherhy.ktor.domain.customer.CustomerRepository
 import chanwoo.cherhy.ktor.domain.customer.CustomerRepositoryImpl
 import chanwoo.cherhy.ktor.domain.customer.CustomerService
+import chanwoo.cherhy.ktor.domain.livestream.LiveStreamRepository
+import chanwoo.cherhy.ktor.domain.livestream.LiveStreamRepositoryImpl
+import chanwoo.cherhy.ktor.domain.livestream.LiveStreamService
 import chanwoo.cherhy.ktor.domain.video.VideoService
 import chanwoo.cherhy.ktor.domain.video.VideoRepository
 import chanwoo.cherhy.ktor.domain.video.VideoRepositoryImpl
@@ -25,12 +28,14 @@ val dependencyInjectionModule = module {
     single<ChatRoomRepository> { ChatRoomRepositoryImpl() }
     single<ChatRoomLinkRepository> { ChatRoomLinkRepositoryImpl() }
     single<VideoRepository> { VideoRepositoryImpl() }
+    single<LiveStreamRepository> { LiveStreamRepositoryImpl() }
 
     single { CustomerService(get()) }
     single { ChatRoomService(get()) }
     single { ChatRoomLinkService(get()) }
     single { ChatService(get()) }
     single { VideoService(get()) }
+    single { LiveStreamService(get()) }
 
     single { JwtManager() }
 }
