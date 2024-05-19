@@ -43,10 +43,21 @@ val ApplicationCall.lastVideoByte: Long
         ?.toLong()
         ?: 0
 
+val ApplicationCall.customerId: Long
+    get() = this.parameters["customer-id"]
+        ?.toLong()
+        ?: throw IllegalArgumentException("customer-id is required.")
+
+val ApplicationCall.liveStreamId: Long
+    get() = this.parameters["live-stream-id"]
+        ?.toLong()
+        ?: throw IllegalArgumentException("live-stream-id is required.")
+
 suspend fun ApplicationCall.getVideo(): UploadVideoRequest {
     val multipart = this.receiveMultipart()
 
-    val videoName = multipart.readPart()?.name
+    val videoName = multipart.readPart()
+        ?.name
         ?: throw IllegalArgumentException("video is required.")
 
     val isVideo = videoName.endsWith(".mp4")
