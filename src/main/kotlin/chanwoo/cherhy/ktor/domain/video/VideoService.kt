@@ -42,6 +42,12 @@ class VideoService(
         )
     }
 
+    fun getVideos(
+        customer: CustomerId,
+    ): List<VideoResponse> {
+        return videoRepository.findAll(customer)
+    }
+
     private fun MinioClient.fetchVideo(
         uniqueName: String,
         lastVideoByte: Long,
@@ -55,10 +61,6 @@ class VideoService(
                 .`object`(uniqueName)
                 .build()
         )
-
-    fun getVideos(customer: CustomerId): List<VideoResponse> {
-        return videoRepository.findAll(customer)
-    }
 
     companion object {
         private val chunkSize = getStreaming(CHUNK_SIZE)
