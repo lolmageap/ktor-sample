@@ -5,13 +5,13 @@ import chanwoo.cherhy.ktor.domain.chat.ChatRoomLinkService
 import chanwoo.cherhy.ktor.domain.chat.ChatService
 import chanwoo.cherhy.ktor.domain.chat.Connection
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
+import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
+import chanwoo.cherhy.ktor.util.EndPoint.CHAT.GET_CHAT_HISTORY
 import chanwoo.cherhy.ktor.util.extension.chatRoomId
 import chanwoo.cherhy.ktor.util.extension.customerId
 import chanwoo.cherhy.ktor.util.extension.customerName
 import chanwoo.cherhy.ktor.util.extension.jwt
 import chanwoo.cherhy.ktor.util.model.PageRequest
-import chanwoo.cherhy.ktor.util.EndPoint.CHAT.ECHO
-import chanwoo.cherhy.ktor.util.EndPoint.CHAT.GET_CHAT_HISTORY
 import chanwoo.cherhy.ktor.util.property.SecurityProperty.AUTHORITY
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -82,7 +82,8 @@ fun Route.chat() {
 private fun DefaultWebSocketServerSession.createConnection(
     chatRoomId: ChatRoomId,
     customerId: CustomerId,
-) =
-    Connection(this, customerId).also { connection ->
-        connectionFactoryMap.getOrPut(chatRoomId) { mutableListOf() }.add(connection)
-    }
+): Connection {
+    val newConnection = Connection(this, customerId)
+    connectionFactoryMap.getOrPut(chatRoomId) { mutableListOf() }.add(newConnection)
+    return newConnection
+}
