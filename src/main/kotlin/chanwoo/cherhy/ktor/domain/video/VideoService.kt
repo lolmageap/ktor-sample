@@ -2,7 +2,7 @@ package chanwoo.cherhy.ktor.domain.video
 
 import chanwoo.cherhy.ktor.api.UploadVideoRequest
 import chanwoo.cherhy.ktor.api.VideoResponse
-import chanwoo.cherhy.ktor.config.MinioConfig
+import chanwoo.cherhy.ktor.config.MinioFactory
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils
 import chanwoo.cherhy.ktor.util.ApplicationConfigUtils.getStreaming
@@ -16,7 +16,7 @@ import io.minio.PutObjectArgs
 class VideoService(
     private val videoRepository: VideoRepository,
 ) {
-    private val minioClient = MinioConfig.init()
+    private val minioClient = MinioFactory.newInstance()
 
     fun getVideo(
         customerId: CustomerId,
