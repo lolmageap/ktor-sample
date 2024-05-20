@@ -1,10 +1,6 @@
 package chanwoo.cherhy.ktor.util.extension
 
 import chanwoo.cherhy.ktor.api.UploadVideoRequest
-import chanwoo.cherhy.ktor.domain.chat.ChatRoomId
-import chanwoo.cherhy.ktor.domain.customer.CustomerId
-import chanwoo.cherhy.ktor.domain.livestream.LiveStreamId
-import chanwoo.cherhy.ktor.domain.video.VideoId
 import chanwoo.cherhy.ktor.util.PathVariable
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.ktor.http.*
@@ -17,7 +13,7 @@ import io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_RANGE
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.nio.file.AccessDeniedException
-import java.util.UUID
+import java.util.*
 
 val mapper = jacksonObjectMapper()
 
