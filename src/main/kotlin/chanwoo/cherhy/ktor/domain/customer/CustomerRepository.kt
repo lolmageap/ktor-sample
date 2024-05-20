@@ -18,7 +18,7 @@ interface CustomerRepository {
 
     fun delete(
         id: CustomerId,
-    ): Unit?
+    )
 
     fun findAll(
         request: PageRequest,
@@ -78,8 +78,7 @@ class CustomerRepositoryImpl : CustomerRepository {
 
     override fun delete(
         id: CustomerId,
-    ) =
-        Customer.findById(id)?.delete()
+    ) { Customer.findById(id)?.delete() }
 
     override fun findByUsername(
         username: String,

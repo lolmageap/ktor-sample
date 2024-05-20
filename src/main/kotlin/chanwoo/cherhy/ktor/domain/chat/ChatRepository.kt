@@ -12,7 +12,7 @@ interface ChatRepository {
         chatRoomId: ChatRoomId,
         customerId: CustomerId,
         message: String,
-    )
+    ): ChatResponse
 
     fun findAll(
         chatRoomId: ChatRoomId,
@@ -25,13 +25,12 @@ class ChatRepositoryImpl : ChatRepository {
         chatRoomId: ChatRoomId,
         customerId: CustomerId,
         message: String,
-    ) {
+    ) =
         Chat.new {
             content = message
             sender = EntityID(customerId, Customers)
             chatRoom = EntityID(chatRoomId, ChatRooms)
-        }
-    }
+        }.let(ChatResponse::of)
 
     override fun findAll(
         chatRoomId: ChatRoomId,
