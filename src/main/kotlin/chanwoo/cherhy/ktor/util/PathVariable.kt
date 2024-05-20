@@ -7,7 +7,8 @@ import chanwoo.cherhy.ktor.domain.video.VideoId
 import io.ktor.server.application.*
 
 class PathVariable(call: ApplicationCall) {
-    val id = call.parameters["id"]?.toLongOrNull()
+    val id = call.parameters["id"]
+        ?.toLongOrNull()
         ?: throw IllegalArgumentException("id is required.")
 
     val chatRoomId: ChatRoomId = call.parameters["chat-room-id"]
