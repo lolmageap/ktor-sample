@@ -28,15 +28,15 @@ class ChatRepositoryImpl : ChatRepository {
     ) =
         Chat.new {
             content = message
-            sender = EntityID(customerId, Customers)
-            chatRoom = EntityID(chatRoomId, ChatRooms)
+            sender = EntityID(customerId.value, Customers)
+            chatRoom = EntityID(chatRoomId.value, ChatRooms)
         }.let(ChatResponse::of)
 
     override fun findAll(
         chatRoomId: ChatRoomId,
         pageRequest: PageRequest
     ) =
-        Chat.find { Chats.chatRoom eq chatRoomId }
+        Chat.find { Chats.chatRoom eq chatRoomId.value }
             .limit(pageRequest.size, pageRequest.offset)
             .orderBy(Chats.createdAt to SortOrder.DESC)
             .map(ChatResponse::of)

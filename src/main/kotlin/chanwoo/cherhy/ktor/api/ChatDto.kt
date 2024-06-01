@@ -7,7 +7,7 @@ import chanwoo.cherhy.ktor.domain.chat.ChatRoomId
 import chanwoo.cherhy.ktor.domain.customer.CustomerId
 
 data class CreateChatRoomRequest(
-    val targetCustomerIds: List<Long>,
+    val targetCustomerIds: List<CustomerId>,
     val name: String,
     val description: String,
     val password: String?,
@@ -15,7 +15,7 @@ data class CreateChatRoomRequest(
 )
 
 data class ChatRoomResponse(
-    val id: Long,
+    val id: ChatRoomId,
     val name: String,
     val maxUser: Int,
     val currentUsers: Int,
@@ -27,12 +27,12 @@ data class ChatRoomResponse(
             chatRoom: ChatRoom,
         ) = with(chatRoom) {
             ChatRoomResponse(
-                id = id.value,
+                id = ChatRoomId.of(id.value),
                 name = name,
                 maxUser = maxUser,
                 currentUsers = currentUser,
                 totalChats = totalChats,
-                owner = owner.value,
+                owner = CustomerId.of(owner.value),
             )
         }
     }
@@ -49,9 +49,9 @@ data class ChatResponse(
             chat: Chat,
         ) = with(chat) {
             ChatResponse(
-                id = id.value,
-                chatRoomId = chatRoom.value,
-                senderId = sender.value,
+                id = ChatId.of(id.value),
+                chatRoomId = ChatRoomId.of(chatRoom.value),
+                senderId = CustomerId.of(sender.value),
                 message = content,
             )
         }
