@@ -30,19 +30,19 @@ class VideoRepositoryImpl : VideoRepository {
             name = request.name
             uniqueName = request.uniqueName
             size = request.size
-            owner = EntityID(customer, Customers)
+            owner = EntityID(customer.value, Customers)
         }.let(VideoResponse::of)
 
     override fun findAll(
         customer: CustomerId,
     ) =
-        Video.find{ Videos.owner eq customer }
+        Video.find{ Videos.owner eq customer.value }
             .map(VideoResponse::of)
 
     override fun findById(
         id: VideoId,
     ) =
-        Video.findById(id)
+        Video.findById(id.value)
             ?.let(VideoResponse::of)
             ?: throw IllegalArgumentException("해당 비디오가 존재하지 않습니다.")
 }

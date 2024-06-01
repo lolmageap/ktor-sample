@@ -39,11 +39,11 @@ data class VideoResponse(
         ) =
             with(video) {
                 VideoResponse(
-                    id = id.value,
+                    id = VideoId.of(id.value),
                     name = name,
                     uniqueName = uniqueName,
                     size = size,
-                    owner = owner.value,
+                    owner = CustomerId.of(owner.value),
                 )
             }
     }
