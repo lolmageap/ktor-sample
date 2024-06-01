@@ -7,11 +7,11 @@ import chanwoo.cherhy.ktor.util.property.SecurityProperty.CUSTOMER_NAME
 import io.ktor.server.auth.jwt.*
 
 val JWTPrincipal?.customerName: CustomerName
-    get() = this?.payload?.getClaim(CUSTOMER_NAME)?.asString()
+    get() = this?.payload?.getClaim(CUSTOMER_NAME)?.asString()?.let(CustomerName::of)
         ?: throw IllegalArgumentException("Invalid customer name")
 
 val JWTPrincipal?.customerId: CustomerId
-    get() = this?.payload?.getClaim(CUSTOMER_ID)?.asLong()
+    get() = this?.payload?.getClaim(CUSTOMER_ID)?.asLong()?.let(CustomerId::of)
         ?: throw IllegalArgumentException("Invalid user id")
 
 val JWTPrincipal?.isExpired: Boolean

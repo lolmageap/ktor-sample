@@ -11,19 +11,19 @@ class PathVariable(call: ApplicationCall) {
         ?.toLongOrNull()
         ?: throw IllegalArgumentException("id is required.")
 
-    val chatRoomId: ChatRoomId = call.parameters["chat-room-id"]
-        ?.toLong()
+    val chatRoomId = call.parameters["chat-room-id"]
+        ?.toLong()?.let(ChatRoomId::of)
         ?: throw IllegalArgumentException("chat-room-id is required.")
 
-    val videoId: VideoId = call.parameters["video-id"]
-        ?.toLong()
+    val videoId = call.parameters["video-id"]
+        ?.toLong()?.let(VideoId::of)
         ?: throw IllegalArgumentException("video-id is required.")
 
-    val customerId: CustomerId = call.parameters["customer-id"]
-        ?.toLong()
+    val customerId = call.parameters["customer-id"]
+        ?.toLong()?.let(CustomerId::of)
         ?: throw IllegalArgumentException("customer-id is required.")
 
-    val liveStreamId: LiveStreamId = call.parameters["live-stream-id"]
-        ?.toLong()
+    val liveStreamId = call.parameters["live-stream-id"]
+        ?.toLong()?.let(LiveStreamId::of)
         ?: throw IllegalArgumentException("live-stream-id is required.")
 }
