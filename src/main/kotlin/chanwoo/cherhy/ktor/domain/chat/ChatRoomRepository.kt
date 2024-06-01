@@ -35,13 +35,13 @@ class ChatRoomRepositoryImpl : ChatRoomRepository {
             maxUser = maxUsers
             currentUser = currentUsers
             totalChats = 0
-            owner = EntityID(ownerId, Customers)
+            owner = EntityID(ownerId.value, Customers)
         }.let(ChatRoomResponse::of)
 
     override fun findById(
         chatRoomId: ChatRoomId,
     ) =
-        ChatRoom.findById(chatRoomId)
+        ChatRoom.findById(chatRoomId.value)
             ?.let(ChatRoomResponse::of)
             ?: throw IllegalArgumentException("ChatRoom not found")
 }
