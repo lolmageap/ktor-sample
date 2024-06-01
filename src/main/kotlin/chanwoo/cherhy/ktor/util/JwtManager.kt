@@ -19,8 +19,8 @@ class JwtManager {
         JWT.create()
             .withAudience(audience)
             .withIssuer(issuer)
-            .withClaim(CUSTOMER_ID, customerId)
-            .withClaim(CUSTOMER_NAME, customerName)
+            .withClaim(CUSTOMER_ID, customerId.value)
+            .withClaim(CUSTOMER_NAME, customerName.value)
             .withExpiresAt(Date(System.currentTimeMillis() + 60000))
             .sign(Algorithm.HMAC256(secret))!!
 
