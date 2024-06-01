@@ -5,21 +5,21 @@ import chanwoo.cherhy.ktor.domain.customer.CustomerId
 import chanwoo.cherhy.ktor.domain.customer.CustomerName
 
 data class LoginRequest(
-    val email: String,
+    val email: CustomerName,
     val password: String,
 )
 
 data class CustomerRequest(
     val name: String,
-    val email: String,
+    val email: CustomerName,
     val password: String,
     val phoneNumber: String?,
 )
 
 data class CustomerResponse(
     val id: CustomerId,
-    val name: CustomerName,
-    val email: String,
+    val name: String,
+    val email: CustomerName,
     val password: String,
     val phoneNumber: String?,
 ) {
@@ -28,9 +28,9 @@ data class CustomerResponse(
             customer: Customer,
         ) = with(customer) {
             CustomerResponse(
-                id = id.value,
+                id = CustomerId.of(id.value),
                 name = name,
-                email = email,
+                email = CustomerName.of(email),
                 password = password,
                 phoneNumber = phoneNumber,
             )

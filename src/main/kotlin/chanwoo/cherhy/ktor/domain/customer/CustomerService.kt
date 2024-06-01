@@ -24,8 +24,8 @@ class CustomerService(
     ) = customerRepository.findAllByIdIn(ids)
 
     fun get(
-        username: String,
-    ) = customerRepository.findByUsername(username)
+        username: CustomerName,
+    ) = customerRepository.findByUsername(username.value)
 
     fun update(
         id: CustomerId,

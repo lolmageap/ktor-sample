@@ -44,7 +44,7 @@ class CustomerRepositoryImpl : CustomerRepository {
     ) =
         Customer.new {
             name = request.name
-            email = request.email
+            email = request.email.value
             password = encodedPassword
             phoneNumber = request.phoneNumber
         }.let(CustomerResponse::of)
@@ -58,9 +58,9 @@ class CustomerRepositoryImpl : CustomerRepository {
             .map(CustomerResponse::of)
 
     override fun findById(
-        id: Long,
+        id: CustomerId,
     ) =
-        Customer.findById(id)
+        Customer.findById(id.value)
             ?.let(CustomerResponse::of)
             ?: throw IllegalArgumentException("Customer not found")
 
@@ -68,9 +68,9 @@ class CustomerRepositoryImpl : CustomerRepository {
         id: CustomerId,
         request: CustomerRequest,
     ) =
-        Customer.findById(id)?.apply {
+        Customer.findById(id.value)?.apply {
             name = request.name
-            email = request.email
+            email = request.email.value
             phoneNumber = request.phoneNumber
         }
             ?.let(CustomerResponse::of)
@@ -78,7 +78,7 @@ class CustomerRepositoryImpl : CustomerRepository {
 
     override fun delete(
         id: CustomerId,
-    ) { Customer.findById(id)?.delete() }
+    ) { Customer.findById(id.value)?.delete() }
 
     override fun findByUsername(
         username: String,
@@ -89,8 +89,8 @@ class CustomerRepositoryImpl : CustomerRepository {
             ?: throw IllegalArgumentException("Customer not found")
 
     override fun findAllByIdIn(
-        ids: List<Long>,
+        ids: List<CustomerId>,
     ): List<CustomerResponse> =
-        Customer.find { Customers.id inList ids }
+        Customer.find { Customers.id inList ids.map { it.value } }
             .map(CustomerResponse::of)
 }
