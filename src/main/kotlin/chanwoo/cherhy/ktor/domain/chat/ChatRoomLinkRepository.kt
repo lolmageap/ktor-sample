@@ -22,10 +22,10 @@ class ChatRoomLinkRepositoryImpl : ChatRoomLinkRepository {
         chatRoomId: ChatRoomId,
         customerIds: List<CustomerId>,
     ) {
-        val chatRooms = EntityID(chatRoomId, ChatRooms)
+        val chatRooms = EntityID(chatRoomId.value, ChatRooms)
 
         customerIds.map {
-            val customers = EntityID(it, Customers)
+            val customers = EntityID(it.value, Customers)
             ChatRoomLink.new {
                 chatRoom = chatRooms
                 customer = customers
@@ -37,8 +37,8 @@ class ChatRoomLinkRepositoryImpl : ChatRoomLinkRepository {
         chatRoomId: ChatRoomId,
         customerId: CustomerId,
     ): Boolean {
-        val chatRooms = EntityID(chatRoomId, ChatRooms)
-        val customers = EntityID(customerId, Customers)
+        val chatRooms = EntityID(chatRoomId.value, ChatRooms)
+        val customers = EntityID(customerId.value, Customers)
 
         return ChatRoomLink.find {
             (ChatRoomLinks.chatRoom eq chatRooms) and
