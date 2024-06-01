@@ -5,3 +5,4 @@
 - [x] websocket chat 구현
 - [x] websocket video streaming 구현
 - [x] websocket live streaming 구현
+- [x] type alias 를 value class로 변경
