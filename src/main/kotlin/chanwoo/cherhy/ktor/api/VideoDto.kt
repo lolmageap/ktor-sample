@@ -13,6 +13,7 @@ data class UploadVideoRequest(
     val size: Long
         get() = data.available().toLong()
     companion object {
+        @JvmStatic
         fun of(
             name: String,
             uniqueName: String,
@@ -34,6 +35,7 @@ data class VideoResponse(
     val owner: CustomerId,
 ) {
     companion object {
+        @JvmStatic
         fun of(
             video: Video,
         ) =

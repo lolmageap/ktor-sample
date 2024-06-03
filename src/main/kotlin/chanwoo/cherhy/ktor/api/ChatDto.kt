@@ -23,6 +23,7 @@ data class ChatRoomResponse(
     val owner: CustomerId,
 ) {
     companion object {
+        @JvmStatic
         fun of(
             chatRoom: ChatRoom,
         ) = with(chatRoom) {
@@ -45,6 +46,7 @@ data class ChatResponse(
     val message: String,
 ) {
     companion object {
+        @JvmStatic
         fun of(
             chat: Chat,
         ) = with(chat) {

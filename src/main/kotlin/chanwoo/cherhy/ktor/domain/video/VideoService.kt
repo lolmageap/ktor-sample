@@ -63,8 +63,13 @@ class VideoService(
         )
 
     companion object {
+        @JvmStatic
         private val chunkSize = getStreaming(CHUNK_SIZE)
+
+        @JvmStatic
         private val objectPartSize = getStreaming(OBJECT_PART_SIZE)
+
+        @JvmStatic
         private val bucket = ApplicationConfigUtils.getMinio(BUCKET)
     }
 }

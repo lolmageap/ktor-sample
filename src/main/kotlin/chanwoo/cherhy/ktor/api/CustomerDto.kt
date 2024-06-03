@@ -24,6 +24,7 @@ data class CustomerResponse(
     val phoneNumber: String?,
 ) {
     companion object {
+        @JvmStatic
         fun of(
             customer: Customer,
         ) = with(customer) {

@@ -32,6 +32,7 @@ value class ChatId(
         other: ChatId,
     ) = value.compareTo(other.value)
     companion object {
+        @JvmStatic
         fun of(
             value: Long,
         ) = ChatId(value)

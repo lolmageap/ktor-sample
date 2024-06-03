@@ -33,6 +33,7 @@ value class VideoId(
         other: VideoId,
     ) = value.compareTo(other.value)
     companion object {
+        @JvmStatic
         fun of(
             value: Long,
         ) = VideoId(value)

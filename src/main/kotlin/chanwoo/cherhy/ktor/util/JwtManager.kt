@@ -25,8 +25,13 @@ class JwtManager {
             .sign(Algorithm.HMAC256(secret))!!
 
     companion object {
+        @JvmStatic
         private val secret = ApplicationConfigUtils.getJwt(SECRET)
+
+        @JvmStatic
         private val issuer = ApplicationConfigUtils.getJwt(ISSUER)
+
+        @JvmStatic
         private val audience = ApplicationConfigUtils.getJwt(AUDIENCE)
     }
 }

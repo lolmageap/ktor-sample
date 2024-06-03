@@ -29,6 +29,7 @@ value class CustomerId(val value: Long): Comparable<CustomerId> {
         other: CustomerId,
     ) = value.compareTo(other.value)
     companion object {
+        @JvmStatic
         fun of(
             value: Long,
         ) = CustomerId(value)
@@ -42,6 +43,7 @@ value class CustomerName(
     val value: String,
 ) {
     companion object {
+        @JvmStatic
         fun of(
             value: String,
         ) = CustomerName(value)

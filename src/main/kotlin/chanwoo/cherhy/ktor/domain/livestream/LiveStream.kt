@@ -28,6 +28,7 @@ value class LiveStreamId(
         other: LiveStreamId,
     ) = value.compareTo(other.value)
     companion object {
+        @JvmStatic
         fun of(
             value: Long,
         ) = LiveStreamId(value)
